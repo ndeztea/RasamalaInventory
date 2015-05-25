@@ -1,14 +1,14 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Description of satuan
- * @created on : Monday, 25-May-2015 07:39:54
+ * Description of category
+ * @created on : Saturday, 23-May-2015 11:00:30
  * @author DAUD D. SIMBOLON <daud.simbolon@gmail.com>
  * Copyright 2015    
  */
  
  
-class satuans extends CI_Model 
+class categorys extends CI_Model 
 {
 
     public function __construct() 
@@ -18,7 +18,7 @@ class satuans extends CI_Model
 
 
     /**
-     *  Get All data satuan
+     *  Get All data category
      *
      *  @param limit  : Integer
      *  @param offset : Integer
@@ -29,7 +29,7 @@ class satuans extends CI_Model
     public function get_all($limit, $offset) 
     {
 
-        $result = $this->db->get('satuan', $limit, $offset);
+        $result = $this->db->get('category', $limit, $offset);
 
         if ($result->num_rows() > 0) 
         {
@@ -44,20 +44,20 @@ class satuans extends CI_Model
     
 
     /**
-     *  Count All satuan
+     *  Count All category
      *    
      *  @return Integer
      *
      */
     public function count_all()
     {
-        $this->db->from('satuan');
+        $this->db->from('category');
         return $this->db->count_all_results();
     }
     
 
     /**
-    * Search All satuan
+    * Search All category
     *
     *  @param limit   : Integer
     *  @param offset  : Integer
@@ -70,10 +70,10 @@ class satuans extends CI_Model
     {
         $keyword = $this->session->userdata('keyword');
                 
-        $this->db->like('satuan', $keyword);  
+        $this->db->like('name', $keyword);  
         
         $this->db->limit($limit, $offset);
-        $result = $this->db->get('satuan');
+        $result = $this->db->get('category');
 
         if ($result->num_rows() > 0) 
         {
@@ -91,7 +91,7 @@ class satuans extends CI_Model
     
     
     /**
-    * Search All satuan
+    * Search All category
     * @param keyword : mixed
     *
     * @return Integer
@@ -100,9 +100,9 @@ class satuans extends CI_Model
     public function count_all_search()
     {
         $keyword = $this->session->userdata('keyword');
-        $this->db->from('satuan');        
+        $this->db->from('category');        
                 
-        $this->db->like('satuan', $keyword);  
+        $this->db->like('name', $keyword);  
         
         return $this->db->count_all_results();
     }
@@ -112,7 +112,7 @@ class satuans extends CI_Model
     
     
     /**
-    *  Get One satuan
+    *  Get One category
     *
     *  @param id : Integer
     *
@@ -122,7 +122,7 @@ class satuans extends CI_Model
     public function get_one($id) 
     {
         $this->db->where('id', $id);
-        $result = $this->db->get('satuan');
+        $result = $this->db->get('category');
 
         if ($result->num_rows() == 1) 
         {
@@ -134,11 +134,16 @@ class satuans extends CI_Model
         }
     }
 
+    public function get_category_name($id){
+        $data = $this->get_one($id);
+        return $data['name'];
+    }
+
     
     
     
     /**
-    *  Default form data satuan
+    *  Default form data category
     *  @return array
     *
     */
@@ -146,7 +151,9 @@ class satuans extends CI_Model
     {
         $data = array(
             
-                'satuan' => '',
+                'name' => '',
+            
+                'id_parent' => '',
             
         );
 
@@ -167,12 +174,14 @@ class satuans extends CI_Model
     {
         $data = array(
         
-            'satuan' => strip_tags($this->input->post('satuan', TRUE)),
+            'name' => strip_tags($this->input->post('name', TRUE)),
+        
+            'id_parent' => strip_tags($this->input->post('id_parent', TRUE)),
         
         );
         
         
-        $this->db->insert('satuan', $data);
+        $this->db->insert('category', $data);
     }
     
     
@@ -191,13 +200,15 @@ class satuans extends CI_Model
     {
         $data = array(
         
-                'satuan' => strip_tags($this->input->post('satuan', TRUE)),
+                'name' => strip_tags($this->input->post('name', TRUE)),
+        
+                'id_parent' => strip_tags($this->input->post('id_parent', TRUE)),
         
         );
         
         
         $this->db->where('id', $id);
-        $this->db->update('satuan', $data);
+        $this->db->update('category', $data);
     }
 
 
@@ -215,7 +226,7 @@ class satuans extends CI_Model
     public function destroy($id)
     {       
         $this->db->where('id', $id);
-        $this->db->delete('satuan');
+        $this->db->delete('category');
         
     }
 
@@ -223,6 +234,28 @@ class satuans extends CI_Model
 
 
 
+
+
+    
+    
+    // get category
+    public function get_category() 
+    {
+      
+        $result = $this->db->get('category')
+                           ->result();
+
+        $ret ['']= 'Pilih Category :';
+        if($result)
+        {
+            foreach ($result as $key => $row)
+            {
+                $ret [$row->id] = $row->name;
+            }
+        }
+        
+        return $ret;
+    }
 
 
     

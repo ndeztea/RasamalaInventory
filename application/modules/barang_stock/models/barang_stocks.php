@@ -40,7 +40,6 @@ class barang_stocks extends CI_Model
             return array();
         }
     }
-
     
 
     /**

@@ -42,7 +42,6 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa  fa-database"></i> Data Master <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo site_url('barang_stock')?>">Barang Stock</a></li>
-                <li><a href="<?php echo site_url('barang')?>">Category</a></li>
                 <li><a href="<?php echo site_url('category')?>">Category</a></li>
                 <li><a href="<?php echo site_url('satuan')?>">Satuan</a></li>
                 <li><a href="<?php echo site_url('users')?>">Pengguna</a></li>

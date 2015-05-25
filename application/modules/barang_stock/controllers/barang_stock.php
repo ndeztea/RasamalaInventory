@@ -17,6 +17,8 @@ class barang_stock extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('barang_stocks');
+        $this->load->model('satuans');
+        $this->load->model('categorys');
     }
     
 
@@ -56,8 +58,23 @@ class barang_stock extends MY_Controller
         $data['barang_stock'] = $this->barang_stocks->add();
         $data['action']  = 'barang_stock/save';
      
-       $data['satuan'] = $this->barang_stocks->get_satuan();
-     
+        $data['satuan'] = $this->barang_stocks->get_satuan();
+        
+        // list category
+        $id_category_temp = $this->categorys->get_all(100,0);
+        foreach($id_category_temp as $row){
+            $categories[$row['id']] = $row['name'];
+        }
+
+        // list satuan
+        $id_satuan_temp = $this->satuans->get_all(100,0);
+        foreach($id_satuan_temp as $row){
+            $id_satuan[$row['id']] = $row['satuan'];
+        }
+    
+        $data['id_satuan'] = $id_satuan;
+        $data['categories'] = $categories;
+
         $this->template->js_add('
                 $(document).ready(function(){
                 // binds form submission and fields to the validation engine
@@ -82,7 +99,20 @@ class barang_stock extends MY_Controller
             $data['barang_stock']      = $this->barang_stocks->get_one($id);
             $data['action']       = 'barang_stock/save/' . $id;           
       
-           $data['satuan'] = $this->barang_stocks->get_satuan();
+            // list category
+            $id_category_temp = $this->categorys->get_all(100,0);
+            foreach($id_category_temp as $row){
+                $categories[$row['id']] = $row['name'];
+            }
+
+            // list satuan
+            $id_satuan_temp = $this->satuans->get_all(100,0);
+            foreach($id_satuan_temp as $row){
+                $id_satuan[$row['id']] = $row['satuan'];
+            }
+        
+            $data['id_satuan'] = $id_satuan;
+            $data['categories'] = $categories;
        
             $this->template->js_add('
                      $(document).ready(function(){
@@ -182,6 +212,8 @@ class barang_stock extends MY_Controller
                 }
          }
     }
+
+
 
     
     

@@ -55,20 +55,16 @@
               </div> <!--/ Kode Barang -->
                           
                <div class="form-group">
-                   <label for="id_category" class="col-sm-2 control-label">Id Category <span class="required-input">*</span></label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'id_category',
-                                 'id'           => 'id_category',                       
-                                 'class'        => 'form-control input-sm  required',
-                                 'placeholder'  => 'Id Category',
-                                 'maxlength'=>'11'
-                                 ),
-                                 set_value('id_category',$barang_stock['id_category'])
+                   <label for="id_category" class="col-sm-2 control-label">Category <span class="required-input">*</span></label>
+                <div class="col-sm-6">         
+                <?php                  
+                   echo form_dropdown(
+                           'id_category',
+                           $categories,  
+                           set_value('id_satuan',$barang_stock['id_category']),
+                           'class="form-control input-sm  required"  id="id_satuan"'
                            );             
-                  ?>
+                  ?>                          
                  <?php echo form_error('id_category');?>
                 </div>
               </div> <!--/ Id Category -->
@@ -93,7 +89,7 @@
               </div> <!--/ Jumlah Stocks -->
                           
                <div class="form-group">
-                   <label for="id_satuan" class="col-sm-2 control-label">Id Satuan <span class="required-input">*</span></label>
+                   <label for="id_satuan" class="col-sm-2 control-label">Satuan <span class="required-input">*</span></label>
                 <div class="col-sm-6">                                   
                   <?php                  
                    echo form_dropdown(

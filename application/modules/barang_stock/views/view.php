@@ -51,11 +51,9 @@
                 
                     <th>Kode Barang</th>   
                 
-                    <th>Id Category</th>   
+                    <th>Category</th>   
                 
-                    <th>Jumlah Stocks</th>   
-                
-                    <th>Id Satuan</th>   
+                    <th>Jumlah Stocks</th> 
                 
                 <th class="red header" align="right" width="120">Aksi</th>
               </tr>
@@ -72,20 +70,19 @@
                
                <td><?php echo $barang_stock['kode_barang']; ?></td>
                
-               <td><?php echo $barang_stock['id_category']; ?></td>
+               <td><?php echo $this->categorys->get_category_name($barang_stock['id_category'])?></td>
                
-               <td><?php echo $barang_stock['jumlah_stocks']; ?></td>
+               <td><?php echo $barang_stock['jumlah_stocks']; ?> <?php echo $this->satuans->get_satuan_name($barang_stock['id_satuan'])?></td>
                
-               <td><?php echo $barang_stock['id_satuan']; ?></td>
                
                 <td>    
                     
                     <?php
-                                  echo anchor(
+                                  /*echo anchor(
                                           site_url('barang_stock/show/' . $barang_stock['id']),
                                             '<i class="glyphicon glyphicon-eye-open"></i>',
                                             'class="btn btn-sm btn-info" data-tooltip="tooltip" data-placement="top" title="Detail"'
-                                          );
+                                          );*/
                    ?>
                     
                     <?php
