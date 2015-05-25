@@ -118,7 +118,7 @@
                   <?php                  
                    echo form_dropdown(
                            'id_akses',
-                           $id_akses,  
+                           $aksess,  
                            set_value('id_akses',$users['id_akses']),
                            'class="form-control input-sm  required"  id="id_akses"'
                            );             

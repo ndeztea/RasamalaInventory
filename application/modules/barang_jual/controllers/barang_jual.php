@@ -17,6 +17,7 @@ class barang_jual extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('barang_juals');
+        $this->load->model('statuss');
     }
     
 
@@ -57,7 +58,14 @@ class barang_jual extends MY_Controller
         $data['action']  = 'barang_jual/save';
      
        $data['barang_beli'] = $this->barang_juals->get_barang_beli();
-     
+
+        // list status
+        $user_status_temp = $this->statuss->get_all(100,0);
+        foreach($user_status_temp as $row){
+            $statuss[$row['id']] = $row['status'];
+        }
+        $data['statuss']  = $statuss;
+         
         $this->template->js_add('
                 $(document).ready(function(){
                 // binds form submission and fields to the validation engine
@@ -83,6 +91,13 @@ class barang_jual extends MY_Controller
             $data['action']       = 'barang_jual/save/' . $id;           
       
            $data['barang_beli'] = $this->barang_juals->get_barang_beli();
+
+            // list status
+            $user_status_temp = $this->statuss->get_all(100,0);
+            foreach($user_status_temp as $row){
+                $statuss[$row['id']] = $row['status'];
+            }
+            $data['statuss']  = $statuss;
        
             $this->template->js_add('
                      $(document).ready(function(){

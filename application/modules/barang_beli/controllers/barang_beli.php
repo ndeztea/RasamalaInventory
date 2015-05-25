@@ -17,6 +17,7 @@ class barang_beli extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('barang_belis');
+        $this->load->model('statuss');
     }
     
 
@@ -56,7 +57,13 @@ class barang_beli extends MY_Controller
         $data['barang_beli'] = $this->barang_belis->add();
         $data['action']  = 'barang_beli/save';
      
-       $data['barang_beli'] = $this->barang_belis->get_barang_beli();
+       
+       // list status
+        $user_status_temp = $this->statuss->get_all(100,0);
+        foreach($user_status_temp as $row){
+            $statuss[$row['id']] = $row['status'];
+        }
+        $data['statuss']  = $statuss;
      
         $this->template->js_add('
                 $(document).ready(function(){
@@ -82,7 +89,14 @@ class barang_beli extends MY_Controller
             $data['barang_beli']      = $this->barang_belis->get_one($id);
             $data['action']       = 'barang_beli/save/' . $id;           
       
-           $data['barang_beli'] = $this->barang_belis->get_barang_beli();
+            $data['barang_beli'] = $this->barang_belis->get_barang_beli();
+
+            // list status
+            $user_status_temp = $this->statuss->get_all(100,0);
+            foreach($user_status_temp as $row){
+                $statuss[$row['id']] = $row['status'];
+            }
+            $data['statuss']  = $statuss;
        
             $this->template->js_add('
                      $(document).ready(function(){

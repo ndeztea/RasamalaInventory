@@ -175,7 +175,7 @@
                   <?php                  
                    echo form_dropdown(
                            'status',
-                           $status,  
+                           $statuss,  
                            set_value('status',$barang_jual['status']),
                            'class="form-control input-sm "  id="status"'
                            );             

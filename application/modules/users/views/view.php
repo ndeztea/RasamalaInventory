@@ -80,16 +80,16 @@
                
                <td><?php echo $users['hp']; ?></td>
                
-               <td><?php echo $users['id_akses']; ?></td>
+               <td><?php echo $this->users_aksess->get_akses_name($users['id_akses'])?></td>
                
                 <td>    
                     
                     <?php
-                                  echo anchor(
+                                  /*echo anchor(
                                           site_url('users/show/' . $users['id']),
                                             '<i class="glyphicon glyphicon-eye-open"></i>',
                                             'class="btn btn-sm btn-info" data-tooltip="tooltip" data-placement="top" title="Detail"'
-                                          );
+                                          );*/
                    ?>
                     
                     <?php

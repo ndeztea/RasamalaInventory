@@ -17,6 +17,7 @@ class users extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('userss');
+        $this->load->model('users_aksess');
     }
     
 
@@ -56,8 +57,15 @@ class users extends MY_Controller
         $data['users'] = $this->userss->add();
         $data['action']  = 'users/save';
      
-       $data['barang_beli'] = $this->userss->get_barang_beli();
-     
+        $data['barang_beli'] = $this->userss->get_barang_beli();
+
+        // list hak akses
+        $user_akses_temp = $this->users_aksess->get_all(100,0);
+        foreach($user_akses_temp as $row){
+            $aksess[$row['id']] = $row['akses'];
+        }
+        $data['aksess']  = $aksess;
+
         $this->template->js_add('
                 $(document).ready(function(){
                 // binds form submission and fields to the validation engine
@@ -83,6 +91,13 @@ class users extends MY_Controller
             $data['action']       = 'users/save/' . $id;           
       
            $data['barang_beli'] = $this->userss->get_barang_beli();
+
+           // list hak akses
+            $user_akses_temp = $this->users_aksess->get_all(100,0);
+            foreach($user_akses_temp as $row){
+                $aksess[$row['id']] = $row['akses'];
+            }
+            $data['aksess']  = $aksess;
        
             $this->template->js_add('
                      $(document).ready(function(){

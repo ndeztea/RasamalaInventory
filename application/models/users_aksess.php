@@ -134,6 +134,12 @@ class users_aksess extends CI_Model
         }
     }
 
+    public function get_akses_name($id){
+        $data = $this->get_one($id);
+        return $data['akses'];
+
+    }
+
     
     
     
