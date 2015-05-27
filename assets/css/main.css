@@ -15,6 +15,9 @@ body {
     color: #f53535;
 }
 
-.warning-stocks{
+.warning-stocks, .warning{
 	background-color: #FFDEEA;
+}
+.success{
+	background-color: #D4FFD4;
 }

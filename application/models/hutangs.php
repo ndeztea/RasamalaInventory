@@ -2,7 +2,7 @@
 
 /**
  * Description of hutang
- * @created on : Monday, 25-May-2015 07:39:38
+ * @created on : Wednesday, 27-May-2015 04:02:05
  * @author DAUD D. SIMBOLON <daud.simbolon@gmail.com>
  * Copyright 2015    
  */
@@ -28,7 +28,9 @@ class hutangs extends CI_Model
      */
     public function get_all($limit, $offset) 
     {
-
+        $this->db->order_by("status", "DESC"); 
+        $this->db->order_by("jatuh_tempo", "ASC"); 
+        
         $result = $this->db->get('hutang', $limit, $offset);
 
         if ($result->num_rows() > 0) 
@@ -73,6 +75,8 @@ class hutangs extends CI_Model
         $this->db->like('jenis_hutang', $keyword);  
                 
         $this->db->like('status', $keyword);  
+                
+        $this->db->like('keterangan', $keyword);  
         
         $this->db->limit($limit, $offset);
         $result = $this->db->get('hutang');
@@ -107,6 +111,8 @@ class hutangs extends CI_Model
         $this->db->like('jenis_hutang', $keyword);  
                 
         $this->db->like('status', $keyword);  
+                
+        $this->db->like('keterangan', $keyword);  
         
         return $this->db->count_all_results();
     }
@@ -156,6 +162,10 @@ class hutangs extends CI_Model
             
                 'status' => '',
             
+                'keterangan' => '',
+            
+                'jatuh_tempo' => '',
+            
         );
 
         return $data;
@@ -180,6 +190,10 @@ class hutangs extends CI_Model
             'total' => strip_tags($this->input->post('total', TRUE)),
         
             'status' => strip_tags($this->input->post('status', TRUE)),
+        
+            'keterangan' => strip_tags($this->input->post('keterangan', TRUE)),
+        
+            'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
         
         );
         
@@ -208,6 +222,10 @@ class hutangs extends CI_Model
                 'total' => strip_tags($this->input->post('total', TRUE)),
         
                 'status' => strip_tags($this->input->post('status', TRUE)),
+        
+                'keterangan' => strip_tags($this->input->post('keterangan', TRUE)),
+        
+                'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
         
         );
         

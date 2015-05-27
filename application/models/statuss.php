@@ -134,6 +134,11 @@ class statuss extends CI_Model
         }
     }
 
+    public function get_status_name($id){
+        $data = $this->get_one($id);
+
+        return $data['status'];
+    }
     
     
     
