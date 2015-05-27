@@ -60,7 +60,7 @@
                   <?php                  
                    echo form_dropdown(
                            'status',
-                           $status,  
+                           $statuss,  
                            set_value('status',$hutang['status']),
                            'class="form-control input-sm  required"  id="status"'
                            );             

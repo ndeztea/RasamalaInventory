@@ -51,9 +51,10 @@
                 
                     <th>Total</th>   
                 
-                    <th>Status</th>   
-                
+                    
                     <th>Keterangan</th>   
+
+                    <th>Status</th> 
                 
                     <th>Jatuh Tempo</th>   
                 
@@ -65,18 +66,29 @@
             <tbody>
              
                <?php foreach ($hutangs as $hutang) : ?>
-              <tr>
+               <?php 
+                $class = '';
+                if($hutang['status']==1){
+                  $class = 'class="success"';
+                }elseif($hutang['status']==2 && check_tempo($hutang['jatuh_tempo'])<5){
+                  $class = 'class="warning-stocks"';
+                }
+               ?>
+              <tr <?php echo $class?>>
               	<td><?php echo $number++;; ?> </td>
                
                <td><?php echo $hutang['jenis_hutang']; ?></td>
                
-               <td><?php echo $hutang['total']; ?></td>
+               <td><?php echo format_uang($hutang['total']); ?></td>
                
-               <td><?php echo $hutang['status']; ?></td>
                
                <td><?php echo $hutang['keterangan']; ?></td>
+
+               <td><?php echo $this->statuss->get_status_name($hutang['status']); ?></td>
                
-               <td><?php echo $hutang['jatuh_tempo']; ?></td>
+               <td><?php echo format_tanggal($hutang['jatuh_tempo']);?> </td>
+
+
                
                 <td>    
                     

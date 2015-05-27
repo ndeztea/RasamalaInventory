@@ -33,42 +33,45 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-            <a class="navbar-brand" href="<?php echo site_url(); ?>">Brain Labs</a>
+            <a class="navbar-brand" href="<?php echo site_url(); ?>">PT. RCP</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="<?php echo site_url('dashboard'); ?>"><i class="fa fa-windows"></i> Dahsboard</a></li>
-            <li><a href="<?php echo site_url('builder'); ?>"><i class="fa fa-code"></i> Builder</a></li>
-            <!--  <li><a href="<?php echo site_url('builder/tools'); ?>"><i class="fa fa-wrench"></i> Tools</a></li> -->
-			<?php
-				$menus = menu(APPPATH . 'modules/');
-			?>
-			
-            <?php   if($menus) : ?>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-signal"></i> Content <b class="caret"></b></a>
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa  fa-database"></i> Data Master <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                
-                 <?php 
-				 
-				 
-				 
-                foreach ($menus as $key => $val)
-                {   
-					 if($val['name'] !='dashboard' && $val['name'] !='builder') : 
-                ?>
-                    <li><a href="<?php  echo site_url($val['name']);  ?>"><?php echo $val['label'];  ?></a></li>
-                
-               <?php
-               		endif;
-                }
-               
-                ?>
-                             
+                <li><a href="<?php echo site_url('barang_stock')?>">Barang Stock</a></li>
+                <li><a href="<?php echo site_url('category')?>">Category</a></li>
+                <li><a href="<?php echo site_url('satuan')?>">Satuan</a></li>
+                <li><a href="<?php echo site_url('users')?>">Pengguna</a></li>
+              </ul>
+             </li>
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart"></i> Penjualan <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo site_url('barang_jual')?>">Delivery Order</a></li>
+                <li><a href="<?php echo site_url('piutang')?>">Piutang</a></li>
               </ul>
             </li>
-            
-            <?php  endif; ?>
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cart-arrow-down"></i> Pembelian <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo site_url('barang_beli')?>">Purchase Order</a></li>
+                <li><a href="<?php echo site_url('hutang')?>">Hutang</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-bar-chart"></i> Laporan <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo site_url('laporan/keuangan')?>">Laporan Keuangan</a></li>
+                <li><a href="<?php echo site_url('laporan/barang')?>">Laporan Barang</a></li>
+              </ul>
+            </li>
+
+            <!--li><a href="<?php echo site_url('builder'); ?>"><i class="fa fa-code"></i> Builder</a></li-->
+            <!--  <li><a href="<?php echo site_url('builder/tools'); ?>"><i class="fa fa-wrench"></i> Tools</a></li> -->
+			   
             
             
           </ul>

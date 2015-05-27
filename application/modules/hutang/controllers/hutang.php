@@ -17,6 +17,7 @@ class hutang extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('hutangs');
+        $this->load->model('statuss');
     }
     
 
@@ -56,7 +57,11 @@ class hutang extends MY_Controller
         $data['hutang'] = $this->hutangs->add();
         $data['action']  = 'hutang/save';
      
-       $data['barang_beli'] = $this->hutangs->get_barang_beli();
+         $tmp_statuss = $this->statuss->get_all();
+        foreach($tmp_statuss as $row){
+            $statuss[$row['id']] = $row['status'];
+        }
+        $data['statuss'] = $statuss;
      
         $this->template->js_add('
                 $(document).ready(function(){
@@ -82,7 +87,11 @@ class hutang extends MY_Controller
             $data['hutang']      = $this->hutangs->get_one($id);
             $data['action']       = 'hutang/save/' . $id;           
       
-           $data['barang_beli'] = $this->hutangs->get_barang_beli();
+             $tmp_statuss = $this->statuss->get_all();
+            foreach($tmp_statuss as $row){
+                $statuss[$row['id']] = $row['status'];
+            }
+            $data['statuss'] = $statuss;
        
             $this->template->js_add('
                      $(document).ready(function(){
