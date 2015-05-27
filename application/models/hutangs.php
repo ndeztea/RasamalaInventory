@@ -1,14 +1,14 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Description of status
- * @created on : Monday, 25-May-2015 07:40:00
+ * Description of hutang
+ * @created on : Monday, 25-May-2015 07:39:38
  * @author DAUD D. SIMBOLON <daud.simbolon@gmail.com>
  * Copyright 2015    
  */
  
  
-class statuss extends CI_Model 
+class hutangs extends CI_Model 
 {
 
     public function __construct() 
@@ -18,7 +18,7 @@ class statuss extends CI_Model
 
 
     /**
-     *  Get All data status
+     *  Get All data hutang
      *
      *  @param limit  : Integer
      *  @param offset : Integer
@@ -26,10 +26,10 @@ class statuss extends CI_Model
      *  @return array
      *
      */
-    public function get_all($limit=1000, $offset=0) 
+    public function get_all($limit, $offset) 
     {
 
-        $result = $this->db->get('status', $limit, $offset);
+        $result = $this->db->get('hutang', $limit, $offset);
 
         if ($result->num_rows() > 0) 
         {
@@ -44,20 +44,20 @@ class statuss extends CI_Model
     
 
     /**
-     *  Count All status
+     *  Count All hutang
      *    
      *  @return Integer
      *
      */
     public function count_all()
     {
-        $this->db->from('status');
+        $this->db->from('hutang');
         return $this->db->count_all_results();
     }
     
 
     /**
-    * Search All status
+    * Search All hutang
     *
     *  @param limit   : Integer
     *  @param offset  : Integer
@@ -70,10 +70,12 @@ class statuss extends CI_Model
     {
         $keyword = $this->session->userdata('keyword');
                 
+        $this->db->like('jenis_hutang', $keyword);  
+                
         $this->db->like('status', $keyword);  
         
         $this->db->limit($limit, $offset);
-        $result = $this->db->get('status');
+        $result = $this->db->get('hutang');
 
         if ($result->num_rows() > 0) 
         {
@@ -91,7 +93,7 @@ class statuss extends CI_Model
     
     
     /**
-    * Search All status
+    * Search All hutang
     * @param keyword : mixed
     *
     * @return Integer
@@ -100,7 +102,9 @@ class statuss extends CI_Model
     public function count_all_search()
     {
         $keyword = $this->session->userdata('keyword');
-        $this->db->from('status');        
+        $this->db->from('hutang');        
+                
+        $this->db->like('jenis_hutang', $keyword);  
                 
         $this->db->like('status', $keyword);  
         
@@ -112,7 +116,7 @@ class statuss extends CI_Model
     
     
     /**
-    *  Get One status
+    *  Get One hutang
     *
     *  @param id : Integer
     *
@@ -122,7 +126,7 @@ class statuss extends CI_Model
     public function get_one($id) 
     {
         $this->db->where('id', $id);
-        $result = $this->db->get('status');
+        $result = $this->db->get('hutang');
 
         if ($result->num_rows() == 1) 
         {
@@ -138,13 +142,17 @@ class statuss extends CI_Model
     
     
     /**
-    *  Default form data status
+    *  Default form data hutang
     *  @return array
     *
     */
     public function add()
     {
         $data = array(
+            
+                'jenis_hutang' => '',
+            
+                'total' => '',
             
                 'status' => '',
             
@@ -167,12 +175,16 @@ class statuss extends CI_Model
     {
         $data = array(
         
+            'jenis_hutang' => strip_tags($this->input->post('jenis_hutang', TRUE)),
+        
+            'total' => strip_tags($this->input->post('total', TRUE)),
+        
             'status' => strip_tags($this->input->post('status', TRUE)),
         
         );
         
         
-        $this->db->insert('status', $data);
+        $this->db->insert('hutang', $data);
     }
     
     
@@ -191,13 +203,17 @@ class statuss extends CI_Model
     {
         $data = array(
         
+                'jenis_hutang' => strip_tags($this->input->post('jenis_hutang', TRUE)),
+        
+                'total' => strip_tags($this->input->post('total', TRUE)),
+        
                 'status' => strip_tags($this->input->post('status', TRUE)),
         
         );
         
         
         $this->db->where('id', $id);
-        $this->db->update('status', $data);
+        $this->db->update('hutang', $data);
     }
 
 
@@ -215,7 +231,7 @@ class statuss extends CI_Model
     public function destroy($id)
     {       
         $this->db->where('id', $id);
-        $this->db->delete('status');
+        $this->db->delete('hutang');
         
     }
 
@@ -223,6 +239,28 @@ class statuss extends CI_Model
 
 
 
+
+
+    
+    
+    // get barang_beli
+    public function get_barang_beli() 
+    {
+      
+        $result = $this->db->get('barang_beli')
+                           ->result();
+
+        $ret ['']= 'Pilih Barang Beli :';
+        if($result)
+        {
+            foreach ($result as $key => $row)
+            {
+                $ret [$row->id] = $row->kode_beli;
+            }
+        }
+        
+        return $ret;
+    }
 
 
     

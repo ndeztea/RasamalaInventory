@@ -28,8 +28,10 @@ class categorys extends CI_Model
      */
     public function get_all($limit, $offset) 
     {
-
+        $this->db->order_by("name", "ASC"); 
         $result = $this->db->get('category', $limit, $offset);
+
+
 
         if ($result->num_rows() > 0) 
         {
