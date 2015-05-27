@@ -35,7 +35,7 @@
                 </div>
               </div> <!--/ Name -->
                           
-               <div class="form-group">
+               <!--div class="form-group">
                    <label for="id_parent" class="col-sm-2 control-label">Id Parent</label>
                 <div class="col-sm-6">                                   
                   <?php                  

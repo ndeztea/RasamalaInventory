@@ -2,7 +2,7 @@
 
 /**
  * Controller hutang
- * @created on : Monday, 25-May-2015 07:39:38
+ * @created on : Wednesday, 27-May-2015 04:02:05
  * @author Daud D. Simbolon <daud.simbolon@gmail.com>
  * Copyright 2015
  *
@@ -127,6 +127,18 @@ class hutang extends MY_Controller
                         'field' => 'status',
                         'label' => 'Status',
                         'rules' => 'trim|xss_clean|required'
+                        ),
+                    
+                    array(
+                        'field' => 'keterangan',
+                        'label' => 'Keterangan',
+                        'rules' => 'trim|xss_clean'
+                        ),
+                    
+                    array(
+                        'field' => 'jatuh_tempo',
+                        'label' => 'Jatuh Tempo',
+                        'rules' => 'trim|xss_clean'
                         ),
                                
                   );

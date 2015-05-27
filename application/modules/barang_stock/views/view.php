@@ -63,7 +63,7 @@
             <tbody>
              
                <?php foreach ($barang_stocks as $barang_stock) : ?>
-              <tr>
+              <tr <?php echo $barang_stock['jumlah_stocks']<=5?'class="warning-stocks"':''?>>
               	<td><?php echo $number++;; ?> </td>
                
                <td><?php echo $barang_stock['nama_barang']; ?></td>

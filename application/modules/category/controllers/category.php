@@ -56,8 +56,6 @@ class category extends MY_Controller
         $data['category'] = $this->categorys->add();
         $data['action']  = 'category/save';
      
-       $data['category'] = $this->categorys->get_category();
-     
         $this->template->js_add('
                 $(document).ready(function(){
                 // binds form submission and fields to the validation engine

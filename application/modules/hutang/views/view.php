@@ -53,6 +53,10 @@
                 
                     <th>Status</th>   
                 
+                    <th>Keterangan</th>   
+                
+                    <th>Jatuh Tempo</th>   
+                
                 <th class="red header" align="right" width="120">Aksi</th>
               </tr>
             </thead>
@@ -69,6 +73,10 @@
                <td><?php echo $hutang['total']; ?></td>
                
                <td><?php echo $hutang['status']; ?></td>
+               
+               <td><?php echo $hutang['keterangan']; ?></td>
+               
+               <td><?php echo $hutang['jatuh_tempo']; ?></td>
                
                 <td>    
                     

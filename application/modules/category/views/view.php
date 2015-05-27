@@ -49,7 +49,7 @@
                 
                     <th>Name</th>   
                 
-                    <th>Id Parent</th>   
+                    <!--th>Id Parent</th-->   
                 
                 <th class="red header" align="right" width="120">Aksi</th>
               </tr>
@@ -64,7 +64,7 @@
                
                <td><?php echo $category['name']; ?></td>
                
-               <td><?php echo $category['id_parent']; ?></td>
+               <!--td><?php echo $category['id_parent']; ?></td-->
                
                 <td>    
                     

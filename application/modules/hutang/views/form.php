@@ -68,6 +68,45 @@
                  <?php echo form_error('status');?>
                 </div>
               </div> <!--/ Status -->
+                          
+               <div class="form-group">
+                   <label for="keterangan" class="col-sm-2 control-label">Keterangan</label>
+                <div class="col-sm-6">                                   
+                  <?php                  
+                   echo form_textarea(
+                            array(
+                                'id'            =>'keterangan',
+                                'name'          =>'keterangan',
+                                'rows'          =>'3',
+                                'class'         =>'form-control input-sm ',
+                                'placeholder'   =>'Keterangan',
+                                
+                                ),
+                            set_value('keterangan',$hutang['keterangan'])                           
+                            );             
+                  ?>
+                 <?php echo form_error('keterangan');?>
+                </div>
+              </div> <!--/ Keterangan -->
+                          
+               <div class="form-group">
+                   <label for="jatuh_tempo" class="col-sm-2 control-label">Jatuh Tempo</label>
+                <div class="col-sm-6">                                   
+                  <?php                  
+                   echo form_input(
+                                array(
+                                 'name'         => 'jatuh_tempo',
+                                 'id'           => 'jatuh_tempo',                       
+                                 'class'        => 'form-control input-sm tanggal ',
+                                 'placeholder'  => 'Jatuh Tempo',
+                                 
+                                 ),
+                                 set_value('jatuh_tempo',$hutang['jatuh_tempo'])
+                           );             
+                  ?>
+                 <?php echo form_error('jatuh_tempo');?>
+                </div>
+              </div> <!--/ Jatuh Tempo -->
                
            
       </div> <!--/ Panel Body -->
