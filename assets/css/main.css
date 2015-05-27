@@ -14,3 +14,7 @@ body {
 .required-input{
     color: #f53535;
 }
+
+.warning-stocks{
+	background-color: #FFDEEA;
+}
