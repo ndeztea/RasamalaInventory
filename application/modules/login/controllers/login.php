@@ -21,9 +21,10 @@ class login extends MY_Controller
 			$this->template->render('login/view');
 		}
 		else
-		{
+		{ 
 			$this->logins->validation_login();
-			print_r($this->session->all_userdata());
+			redirect(site_url('dashboard/', 'refresh'));
+
 		}
 	}
 }
