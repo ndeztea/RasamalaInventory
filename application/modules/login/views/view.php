@@ -2,7 +2,7 @@
 					<h1>LOGIN</h1>
 					<center>
 					<table class="text-center">
-						<?php echo form_open(site_url('index.php/login/')); ?>
+						<?php echo form_open(site_url('login/')); ?>
 
 						<tr>
 							<td><label for="username">Username</label></td>
