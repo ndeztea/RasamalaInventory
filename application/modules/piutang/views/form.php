@@ -9,7 +9,7 @@
 	</div>
 </div><!-- /.row -->
 
-<?php echo form_open(site_url('hutang/' . $action),'role="form" class="form-horizontal" id="form_hutang" parsley-validate'); ?>               
+<?php echo form_open(site_url('piutang/' . $action),'role="form" class="form-horizontal" id="form_piutang" parsley-validate'); ?>               
 <div class="panel panel-default">
     <div class="panel-heading"><i class="glyphicon glyphicon-signal"></i> </div>
      
@@ -17,23 +17,23 @@
          
                        
                <div class="form-group">
-                   <label for="jenis_hutang" class="col-sm-2 control-label">Jenis Hutang <span class="required-input">*</span></label>
+                   <label for="jenis_piutang" class="col-sm-2 control-label">Jenis Piutang <span class="required-input">*</span></label>
                 <div class="col-sm-6">                                   
                   <?php                  
                    echo form_input(
                                 array(
-                                 'name'         => 'jenis_hutang',
-                                 'id'           => 'jenis_hutang',                       
+                                 'name'         => 'jenis_piutang',
+                                 'id'           => 'jenis_piutang',                       
                                  'class'        => 'form-control input-sm  required',
-                                 'placeholder'  => 'Jenis Hutang',
+                                 'placeholder'  => 'Jenis Piutang',
                                  'maxlength'=>'255'
                                  ),
-                                 set_value('jenis_hutang',$hutang['jenis_hutang'])
+                                 set_value('jenis_piutang',$piutang['jenis_piutang'])
                            );             
                   ?>
-                 <?php echo form_error('jenis_hutang');?>
+                 <?php echo form_error('jenis_piutang');?>
                 </div>
-              </div> <!--/ Jenis Hutang -->
+              </div> <!--/ Jenis Piutang -->
                           
                <div class="form-group">
                    <label for="total" class="col-sm-2 control-label">Total <span class="required-input">*</span></label>
@@ -47,14 +47,12 @@
                                  'placeholder'  => 'Total',
                                  
                                  ),
-                                 set_value('total',$hutang['total'])
+                                 set_value('total',$piutang['total'])
                            );             
                   ?>
                  <?php echo form_error('total');?>
                 </div>
               </div> <!--/ Total -->
-                          
-               
                           
                <div class="form-group">
                    <label for="jatuh_tempo" class="col-sm-2 control-label">Jatuh Tempo</label>
@@ -68,14 +66,14 @@
                                  'placeholder'  => 'Jatuh Tempo',
                                  
                                  ),
-                                 set_value('jatuh_tempo',$hutang['jatuh_tempo'])
+                                 set_value('jatuh_tempo',$piutang['jatuh_tempo'])
                            );             
                   ?>
                  <?php echo form_error('jatuh_tempo');?>
                 </div>
               </div> <!--/ Jatuh Tempo -->
-
-              <div class="form-group">
+                          
+               <div class="form-group">
                    <label for="keterangan" class="col-sm-2 control-label">Keterangan</label>
                 <div class="col-sm-6">                                   
                   <?php                  
@@ -88,21 +86,21 @@
                                 'placeholder'   =>'Keterangan',
                                 
                                 ),
-                            set_value('keterangan',$hutang['keterangan'])                           
+                            set_value('keterangan',$piutang['keterangan'])                           
                             );             
                   ?>
                  <?php echo form_error('keterangan');?>
                 </div>
               </div> <!--/ Keterangan -->
-
-              <div class="form-group">
+                          
+               <div class="form-group">
                    <label for="status" class="col-sm-2 control-label">Status <span class="required-input">*</span></label>
                 <div class="col-sm-6">                                   
                   <?php                  
                    echo form_dropdown(
                            'status',
                            $statuss,  
-                           set_value('status',$hutang['status']),
+                           set_value('status',$piutang['status']),
                            'class="form-control input-sm  required"  id="status"'
                            );             
                   ?>
@@ -115,7 +113,7 @@
     <div class="panel-footer">   
           <div class="row"> 
               <div class="col-md-10 col-sm-12 col-md-offset-2 col-sm-offset-0">
-                   <a href="<?php echo site_url('hutang'); ?>" class="btn btn-default">
+                   <a href="<?php echo site_url('piutang'); ?>" class="btn btn-default">
                        <i class="glyphicon glyphicon-chevron-left"></i> Kembali
                    </a> 
                     <button type="submit" class="btn btn-primary" name="post">

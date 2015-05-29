@@ -15,7 +15,7 @@
             <div class="col-md-8 col-xs-3">                
                 <?php
                                   echo anchor(
-                                           site_url('hutang/add'),
+                                           site_url('piutang/add'),
                                             '<i class="glyphicon glyphicon-plus"></i>',
                                             'class="btn btn-success btn-sm" data-tooltip="tooltip" data-placement="top" title="Tambah Data"'
                                           );
@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-4 col-xs-9">
                                            
-                 <?php echo form_open(site_url('hutang/search'), 'role="search" class="form"') ;?>       
+                 <?php echo form_open(site_url('piutang/search'), 'role="search" class="form"') ;?>       
                            <div class="input-group pull-right">                      
                                  <input type="text" class="form-control input-sm" placeholder="Cari data" name="q" autocomplete="off"> 
                                  <span class="input-group-btn">
@@ -40,22 +40,22 @@
     
     
     <div class="panel-body">
-         <?php if ($hutangs) : ?>
+         <?php if ($piutangs) : ?>
           <table class="table table-hover table-condensed">
               
             <thead>
               <tr>
                 <th class="header">#</th>
                 
-                    <th>Jenis Hutang</th>   
+                    <th>Jenis Piutang</th>   
                 
                     <th>Total</th>   
-                    
-                    <th>Keterangan</th> 
                 
-                    <th>Jatuh Tempo</th>   
+                    <th>Keterangan</th>   
 
-                    <th>Status</th> 
+                    <th>Jatuh Tempo</th>  
+                
+                    <th>Status</th>   
                 
                 <th class="red header" align="right" width="120">Aksi</th>
               </tr>
@@ -64,33 +64,37 @@
             
             <tbody>
              
-               <?php foreach ($hutangs as $hutang) : ?>
+               <?php foreach ($piutangs as $piutang) : ?>
                <?php 
                 $class = '';
-                if($hutang['status']==1){
+                if($piutang['status']==1){
                   $class = 'class="success"';
-                }elseif($hutang['status']==2 && check_tempo($hutang['jatuh_tempo'])<5){
+                }elseif($piutang['status']==2 && check_tempo($piutang['jatuh_tempo'])<5){
                   $class = 'class="warning-stocks"';
                 }
                ?>
               <tr <?php echo $class?>>
               	<td><?php echo $number++;; ?> </td>
                
-               <td><?php echo $hutang['jenis_hutang']; ?></td>
+               <td><?php echo $piutang['jenis_piutang']; ?></td>
                
-               <td><?php echo format_uang($hutang['total']); ?></td>
+               <td><?php echo format_uang($piutang['total']); ?></td>
                
+               <td><?php echo $piutang['jatuh_tempo']; ?></td>
                
-               <td><?php echo $hutang['keterangan']; ?></td>
-               
-               <td><?php echo format_tanggal($hutang['jatuh_tempo']);?> </td>
+               <td><?php echo $piutang['keterangan']; ?></td>
 
-               <td><?php echo $this->statuss->get_status_name($hutang['status']); ?></td>
+               <td><?php echo format_tanggal($piutang['jatuh_tempo']);?> </td>
+               
+               <td><?php echo $this->statuss->get_status_name($piutang['status']); ?></td>
+               
+               
+               
                 <td>    
                     
                     <?php
                                   echo anchor(
-                                          site_url('hutang/show/' . $hutang['id']),
+                                          site_url('piutang/show/' . $piutang['id']),
                                             '<i class="glyphicon glyphicon-eye-open"></i>',
                                             'class="btn btn-sm btn-info" data-tooltip="tooltip" data-placement="top" title="Detail"'
                                           );
@@ -98,7 +102,7 @@
                     
                     <?php
                                   echo anchor(
-                                          site_url('hutang/edit/' . $hutang['id']),
+                                          site_url('piutang/edit/' . $piutang['id']),
                                             '<i class="glyphicon glyphicon-edit"></i>',
                                             'class="btn btn-sm btn-success" data-tooltip="tooltip" data-placement="top" title="Edit"'
                                           );
@@ -106,7 +110,7 @@
                    
                    <?php
                                   echo anchor(
-                                          site_url('hutang/destroy/' . $hutang['id']),
+                                          site_url('piutang/destroy/' . $piutang['id']),
                                             '<i class="glyphicon glyphicon-trash"></i>',
                                             'onclick="return confirm(\'Anda yakin..???\');" class="btn btn-sm btn-danger" data-tooltip="tooltip" data-placement="top" title="Hapus"'
                                           );
@@ -118,7 +122,7 @@
             </tbody>
           </table>
           <?php else: ?>
-                <?php  echo notify('Data hutang belum tersedia','info');?>
+                <?php  echo notify('Data piutang belum tersedia','info');?>
           <?php endif; ?>
     </div>
     
@@ -126,7 +130,7 @@
     <div class="panel-footer">
         <div class="row">
            <div class="col-md-3">
-               Hutang
+               Piutang
                <span class="label label-info">
                     <?php echo $total; ?>
                </span>

@@ -1,14 +1,14 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Description of hutang
- * @created on : Wednesday, 27-May-2015 04:02:05
+ * Description of piutang
+ * @created on : Wednesday, 27-May-2015 16:59:43
  * @author DAUD D. SIMBOLON <daud.simbolon@gmail.com>
  * Copyright 2015    
  */
  
  
-class hutangs extends CI_Model 
+class piutangs extends CI_Model 
 {
 
     public function __construct() 
@@ -18,7 +18,7 @@ class hutangs extends CI_Model
 
 
     /**
-     *  Get All data hutang
+     *  Get All data piutang
      *
      *  @param limit  : Integer
      *  @param offset : Integer
@@ -29,7 +29,7 @@ class hutangs extends CI_Model
     public function get_all($limit, $offset) 
     {
 
-        $result = $this->db->get('hutang', $limit, $offset);
+        $result = $this->db->get('piutang', $limit, $offset);
 
         if ($result->num_rows() > 0) 
         {
@@ -44,20 +44,20 @@ class hutangs extends CI_Model
     
 
     /**
-     *  Count All hutang
+     *  Count All piutang
      *    
      *  @return Integer
      *
      */
     public function count_all()
     {
-        $this->db->from('hutang');
+        $this->db->from('piutang');
         return $this->db->count_all_results();
     }
     
 
     /**
-    * Search All hutang
+    * Search All piutang
     *
     *  @param limit   : Integer
     *  @param offset  : Integer
@@ -70,14 +70,14 @@ class hutangs extends CI_Model
     {
         $keyword = $this->session->userdata('keyword');
                 
-        $this->db->like('jenis_hutang', $keyword);  
-                
-        $this->db->like('status', $keyword);  
+        $this->db->like('jenis_piutang', $keyword);  
                 
         $this->db->like('keterangan', $keyword);  
+                
+        $this->db->like('status', $keyword);  
         
         $this->db->limit($limit, $offset);
-        $result = $this->db->get('hutang');
+        $result = $this->db->get('piutang');
 
         if ($result->num_rows() > 0) 
         {
@@ -95,7 +95,7 @@ class hutangs extends CI_Model
     
     
     /**
-    * Search All hutang
+    * Search All piutang
     * @param keyword : mixed
     *
     * @return Integer
@@ -104,13 +104,13 @@ class hutangs extends CI_Model
     public function count_all_search()
     {
         $keyword = $this->session->userdata('keyword');
-        $this->db->from('hutang');        
+        $this->db->from('piutang');        
                 
-        $this->db->like('jenis_hutang', $keyword);  
-                
-        $this->db->like('status', $keyword);  
+        $this->db->like('jenis_piutang', $keyword);  
                 
         $this->db->like('keterangan', $keyword);  
+                
+        $this->db->like('status', $keyword);  
         
         return $this->db->count_all_results();
     }
@@ -120,7 +120,7 @@ class hutangs extends CI_Model
     
     
     /**
-    *  Get One hutang
+    *  Get One piutang
     *
     *  @param id : Integer
     *
@@ -130,7 +130,7 @@ class hutangs extends CI_Model
     public function get_one($id) 
     {
         $this->db->where('id', $id);
-        $result = $this->db->get('hutang');
+        $result = $this->db->get('piutang');
 
         if ($result->num_rows() == 1) 
         {
@@ -146,7 +146,7 @@ class hutangs extends CI_Model
     
     
     /**
-    *  Default form data hutang
+    *  Default form data piutang
     *  @return array
     *
     */
@@ -154,15 +154,15 @@ class hutangs extends CI_Model
     {
         $data = array(
             
-                'jenis_hutang' => '',
+                'jenis_piutang' => '',
             
                 'total' => '',
             
-                'status' => '',
+                'jatuh_tempo' => '',
             
                 'keterangan' => '',
             
-                'jatuh_tempo' => '',
+                'status' => '',
             
         );
 
@@ -183,20 +183,20 @@ class hutangs extends CI_Model
     {
         $data = array(
         
-            'jenis_hutang' => strip_tags($this->input->post('jenis_hutang', TRUE)),
+            'jenis_piutang' => strip_tags($this->input->post('jenis_piutang', TRUE)),
         
             'total' => strip_tags($this->input->post('total', TRUE)),
         
-            'status' => strip_tags($this->input->post('status', TRUE)),
+            'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
         
             'keterangan' => strip_tags($this->input->post('keterangan', TRUE)),
         
-            'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
+            'status' => strip_tags($this->input->post('status', TRUE)),
         
         );
         
         
-        $this->db->insert('hutang', $data);
+        $this->db->insert('piutang', $data);
     }
     
     
@@ -215,21 +215,21 @@ class hutangs extends CI_Model
     {
         $data = array(
         
-                'jenis_hutang' => strip_tags($this->input->post('jenis_hutang', TRUE)),
+                'jenis_piutang' => strip_tags($this->input->post('jenis_piutang', TRUE)),
         
                 'total' => strip_tags($this->input->post('total', TRUE)),
         
-                'status' => strip_tags($this->input->post('status', TRUE)),
+                'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
         
                 'keterangan' => strip_tags($this->input->post('keterangan', TRUE)),
         
-                'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
+                'status' => strip_tags($this->input->post('status', TRUE)),
         
         );
         
         
         $this->db->where('id', $id);
-        $this->db->update('hutang', $data);
+        $this->db->update('piutang', $data);
     }
 
 
@@ -247,7 +247,7 @@ class hutangs extends CI_Model
     public function destroy($id)
     {       
         $this->db->where('id', $id);
-        $this->db->delete('hutang');
+        $this->db->delete('piutang');
         
     }
 
