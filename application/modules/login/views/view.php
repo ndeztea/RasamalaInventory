@@ -1,7 +1,7 @@
 <div class="container text-center">
 					<h1>LOGIN</h1>
 					<table>
-						<?php form_open(site_url('login/'); ?>
+						<?php form_open(site_url('login/')); ?>
 						<tr>
 							<td><label for="username">Username</label></td>
 							<td>:</td>
