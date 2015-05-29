@@ -228,6 +228,17 @@ class barang_stocks extends CI_Model
         $this->db->update('barang_stock', $data);
     }
 
+    public function update_stocks($id,$jumlah_stocks){
+        $data = array(
+            'jumlah_stocks' => $jumlah_stocks);
+
+        $this->db->where('id', $id);
+        $this->db->update('barang_stock', $data);
+
+    }
+
+    
+
 
     
     
