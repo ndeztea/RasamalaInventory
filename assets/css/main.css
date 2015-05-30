@@ -21,3 +21,7 @@ body {
 .success{
 	background-color: #D4FFD4;
 }
+
+.number{
+	text-align: right;
+}
