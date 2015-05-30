@@ -18,15 +18,15 @@ class barang_beli extends MY_Controller
         parent::__construct();         
         $this->load->model('barang_belis');
         $this->load->model('statuss');
-<<<<<<< HEAD
+
         if(empty($this->session->userdata('level')))
             {  
                 redirect(site_url('login/'));
             }     
-=======
+
         $this->load->model('barang_stocks');
         $this->load->model('satuans');
->>>>>>> origin/master
+
     }
     
 
