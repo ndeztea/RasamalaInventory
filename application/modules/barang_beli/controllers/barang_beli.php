@@ -19,7 +19,7 @@ class barang_beli extends MY_Controller
         $this->load->model('barang_belis');
         $this->load->model('statuss');
 
-        if(empty($this->session->userdata('level')))
+        if(!$this->session->userdata('level'))
             {  
                 redirect(site_url('login/'));
             }     

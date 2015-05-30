@@ -19,10 +19,10 @@ class barang_stock extends MY_Controller
         $this->load->model('barang_stocks');
         $this->load->model('satuans');
         $this->load->model('categorys');
-        if(empty($this->session->userdata('level')))
-            {  
-                redirect(site_url('login/'));
-            }     
+        if(!$this->session->userdata('level'))
+        {  
+            redirect(site_url('login/'));
+        }     
     }
     
 

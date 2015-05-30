@@ -36,7 +36,7 @@
 
 // The following values will probably need to be changed.
 $db['default']['username'] = "root";
-$db['default']['password'] = "";
+$db['default']['password'] = "root";
 $db['default']['database'] = "db_rasamala";
 
 // The following values can probably stay the same.
