@@ -18,10 +18,15 @@ class barang_beli extends MY_Controller
         parent::__construct();         
         $this->load->model('barang_belis');
         $this->load->model('statuss');
+<<<<<<< HEAD
         if(empty($this->session->userdata('level')))
             {  
                 redirect(site_url('login/'));
             }     
+=======
+        $this->load->model('barang_stocks');
+        $this->load->model('satuans');
+>>>>>>> origin/master
     }
     
 
@@ -60,8 +65,16 @@ class barang_beli extends MY_Controller
     {       
         $data['barang_beli'] = $this->barang_belis->add();
         $data['action']  = 'barang_beli/save';
-     
-       
+            
+        // list nama barang
+        $nama_barangs_tmp = $this->barang_stocks->get_all(1000,0);
+        $nama_barangs[0] = '-Pilih Barang-';
+        foreach($nama_barangs_tmp as $row){
+            $nama_barangs[$row['nama_barang'].'-'.$row['kode_barang'].'-'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
+        }
+        $data['nama_barangs']  = $nama_barangs;
+        $data['nama_barangs_tmp'] = $nama_barangs_tmp;
+
        // list status
         $user_status_temp = $this->statuss->get_all(100,0);
         foreach($user_status_temp as $row){
