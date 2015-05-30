@@ -68,6 +68,15 @@
                 <li><a href="<?php echo site_url('laporan/barang')?>">Laporan Barang</a></li>
               </ul>
             </li>
+           
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user"></i> User <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo site_url('login/logout')?>">Log Out</a></li>
+              </ul>
+            </li>
+           
+
 
             <!--li><a href="<?php echo site_url('builder'); ?>"><i class="fa fa-code"></i> Builder</a></li-->
             <!--  <li><a href="<?php echo site_url('builder/tools'); ?>"><i class="fa fa-wrench"></i> Tools</a></li> -->
