@@ -17,6 +17,10 @@ class barang_jual_detail extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('barang_jual_details');
+        if(empty($this->session->userdata('level')))
+            {  
+                redirect(site_url('login/'));
+            }     
     }
     
 

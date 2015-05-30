@@ -17,6 +17,10 @@ class barang_beli_detail extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('barang_beli_details');
+        if(empty($this->session->userdata('level')))
+            {  
+                redirect(site_url('login/'));
+            }     
     }
     
 

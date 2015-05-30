@@ -18,6 +18,10 @@ class piutang extends MY_Controller
         parent::__construct();         
         $this->load->model('piutangs');
         $this->load->model('statuss');
+       if(empty($this->session->userdata('level')))
+            {  
+                redirect(site_url('login/'));
+            }     
     }
     
 

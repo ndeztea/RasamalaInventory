@@ -18,6 +18,11 @@ class users extends MY_Controller
         parent::__construct();         
         $this->load->model('userss');
         $this->load->model('users_aksess');
+
+       if(empty($this->session->userdata('level')))
+            {  
+                redirect(site_url('login/'));
+            }     
     }
     
 

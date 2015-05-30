@@ -42,7 +42,7 @@ class logins extends CI_Model
 								  'id' => $row->id,
 								  'level' => $levels
 								  );
-					$this->session->set_userdata( $data);
+					$this->session->set_userdata($data);
 				}
 				return TRUE;
 			}
