@@ -27,4 +27,10 @@ class login extends MY_Controller
 
 		}
 	}
+
+	function logout()
+			{
+				$this->session->sess_destroy();
+				redirect(site_url('/login'));
+			}
 }
