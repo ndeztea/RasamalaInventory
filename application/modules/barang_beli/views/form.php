@@ -414,7 +414,11 @@
 
 <script>
  function pilih_barang(elm){
-  alert($(elm).val());
+  parent = $(elm).val().parent();
+  console.log(parent);
+  data = $(elm).val();
+  arr = data.split('-');
+
  }
 
  function tambah_barang(){
