@@ -1,7 +1,9 @@
 <div class="wrapper">
+      <?php if(!$print):?>
       <div class="page-header">
-       <h3>Barang Beli</h3>
+       <h3>Barang Masuk</h3>
       </div>
+    <?php endif?>
       <!-- Main content -->
       <section class="invoice">
         <!-- info row -->
@@ -103,17 +105,19 @@
           </div><!-- /.col -->
         </div><!-- /.row -->
       </section><!-- /.content -->
+      <?php if(!$print):?>
       <div class="panel-footer">   
           <div class="row"> 
               <div>
                    <a href="<?php echo site_url('barang_beli'); ?>" class="btn btn-default">
                        <i class="glyphicon glyphicon-chevron-left"></i> Kembali
                    </a> 
-                    <button type="submit" class="btn btn-primary" name="post">
-                        <i class="glyphicon glyphicon-floppy-save"></i> Simpan 
-                    </button>                  
+                    <a  class="btn btn-primary" href="<?php echo site_url('barang_beli/show/'.$barang_beli['id'].'/print')?>">
+                        <i class="glyphicon glyphicon-print"></i> Print 
+                    </a>                  
               </div>
           </div>
-    </div><!--/ Panel Footer -->       
+    </div><!--/ Panel Footer -->  
+    <?php endif?>     
 </div><!--/ Panel -->
 

@@ -25,3 +25,8 @@ body {
 .number{
 	text-align: right;
 }
+
+.login-box {background: #EEE; border: 1px solid #DDD;width: 500px}
+.login-box table tr td{padding:10px;}
+.login-box h1{text-align: center}
+

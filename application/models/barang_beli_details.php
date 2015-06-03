@@ -252,6 +252,13 @@ class barang_beli_details extends CI_Model
         
     }
 
+    public function destroy_parent($id_barang_beli)
+    {       
+        $this->db->where('id_barang_beli', $id_barang_beli);
+        $this->db->delete('barang_beli_detail');
+        
+    }
+
 
 
 

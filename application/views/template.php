@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<?php if($this->uri->segment(4)=='print'):?>
+<?php include_once('print_header.php')   ?>
+<?php else:?>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">  
@@ -12,7 +15,7 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
    
-    <title>Home</title>
+    <title><?php echo set_label($this->uri->segment(1))?> - CV. RASAMALA</title>
     <link href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/css/main.css" rel="stylesheet" type="text/css">
@@ -25,6 +28,7 @@
 <body>
   
     <!-- Fixed navbar -->
+    <?php if($this->session->userdata('level')!=''):?>
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -68,13 +72,14 @@
                 <li><a href="<?php echo site_url('laporan/barang')?>">Laporan Barang</a></li>
               </ul>
             </li>
-           
+          </ul>
+            <ul class="nav navbar-nav navbar-right">
             <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user"></i> User <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo site_url('login/logout')?>">Log Out</a></li>
               </ul>
-            </li>
+            
            
 
 
@@ -83,16 +88,15 @@
 			   
             
             
-          </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
-   
+    <?php endif?>
  
    
     <div class="container">
         <div class="row">
-            
+                <?php  echo $this->session->flashdata('notif')?>
                 <?php echo $content; ?>
             
         </div>
@@ -131,3 +135,4 @@
 
 </body>
 </html>
+<?php endif?>

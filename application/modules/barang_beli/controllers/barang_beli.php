@@ -25,7 +25,7 @@ class barang_beli extends MY_Controller
             {  
                 redirect(site_url('login/'));
             }     
-
+       //     echo $this->session->flashdata('notif');
         $this->load->model('barang_stocks');
         $this->load->model('satuans');
 
@@ -102,20 +102,29 @@ class barang_beli extends MY_Controller
     */
     public function edit($id='') 
     {
-        if ($id != '') 
+        $data['barang_beli']      = $this->barang_belis->get_one($id);
+        if (!empty($data['barang_beli'])) 
         {
 
-            $data['barang_beli']      = $this->barang_belis->get_one($id);
             $data['action']       = 'barang_beli/save/' . $id;           
       
-            $data['barang_beli'] = $this->barang_belis->get_barang_beli();
+            // list nama barang
+        $nama_barangs_tmp = $this->barang_stocks->get_all(1000,0);
+        $nama_barangs[0] = '-Pilih Barang-';
+        foreach($nama_barangs_tmp as $row){
+            $nama_barangs[$row['nama_barang'].'-'.$row['kode_barang'].'-'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
+        }
+        $data['nama_barangs']  = $nama_barangs;
+        $data['nama_barangs_tmp'] = $nama_barangs_tmp;
 
-            // list status
-            $user_status_temp = $this->statuss->get_all(100,0);
-            foreach($user_status_temp as $row){
-                $statuss[$row['id']] = $row['status'];
-            }
-            $data['statuss']  = $statuss;
+       // list status
+        $user_status_temp = $this->statuss->get_all(100,0);
+        foreach($user_status_temp as $row){
+            $statuss[$row['id']] = $row['status'];
+        }
+        $data['statuss']  = $statuss;
+
+        $data['barang_beli_details'] = $this->barang_beli_details->get_barang_detail($id);
        
             $this->template->js_add('
                      $(document).ready(function(){
@@ -256,6 +265,32 @@ class barang_beli extends MY_Controller
                     if ($this->input->post()) 
                     {
                         $this->barang_belis->update($id);
+                        
+                        // reset
+                        $this->barang_beli_details->destroy_parent($id);
+                         // save data barang detail
+                          $nama_barang = $this->input->post('nama_barang');
+                          $kode_barang = $this->input->post('kode_barang');
+                          $jumlah = $this->input->post('jumlah');
+                          $id_satuan = $this->input->post('id_satuan');
+                          $harga = $this->input->post('harga');
+                          $total_harga = $this->input->post('total_harga');
+
+                          for($a=0;$a<count($nama_barang);$a++){
+                            $data_barang_detail = array(
+                                'id_barang_beli' => strip_tags($id),
+                                'nama_barang' => strip_tags($nama_barang[$a]),
+                                'kode_barang' => strip_tags($kode_barang[$a]),
+                                'jumlah' => strip_tags($jumlah[$a]),
+                                'id_satuan' => strip_tags($id_satuan[$a]),
+                                'harga' => strip_tags($harga[$a]),
+                                'total_harga' => strip_tags($total_harga[$a]),
+                            
+                            );
+                            $this->barang_beli_details->save($data_barang_detail);
+                          }
+                          
+
                         $this->session->set_flashdata('notif', notify('Data berhasil di update','success'));
                         redirect('barang_beli');
                     }
@@ -273,14 +308,14 @@ class barang_beli extends MY_Controller
     * Detail barang_beli
     *
     */
-    public function show($id='') 
+    public function show($id='',$print='') 
     {
         if ($id != '') 
         {
 
             $data['barang_beli'] = $this->barang_belis->get_one($id); 
             $data['barang_beli_details'] = $this->barang_beli_details->get_barang_detail($id);
-
+            $data['print'] = $print;
             $this->template->render('barang_beli/_show',$data);
             
         }
@@ -335,6 +370,7 @@ class barang_beli extends MY_Controller
         if ($id) 
         {
             $this->barang_belis->destroy($id);           
+            $this->barang_beli_details->destroy_parent($id);
              $this->session->set_flashdata('notif', notify('Data berhasil di hapus','success'));
              redirect('barang_beli');
         } 

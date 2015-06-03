@@ -3,7 +3,7 @@
 		<?php 
                 
                 echo create_breadcrumb();		
-                echo $this->session->flashdata('notify');
+                //echo $this->session->flashdata('notify');
                 
                 ?>
 	</div>
@@ -112,6 +112,36 @@
                 </tr>
               </thead>
               <tbody class="data-detail">
+                <?php $sub_total = $a = 0; ?>
+                <?php if(!empty($barang_beli_details)):?>
+                <?php foreach($barang_beli_details as $barang_beli_detail):?>
+                <tr id="data_<?php echo $a?>" class="barang_items">
+                  <td> 
+                    <a href="javascript:;" onclick="hapus_barang(this)" class="btn btn-danger btn-sm" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Hapus Barang">
+                      <i class="glyphicon glyphicon-minus"></i>
+                    </a>
+                  </td>
+                  <td>
+                  <?php                  
+                   echo form_dropdown(
+                           'nama_barang_tmp[]',
+                           $nama_barangs,  
+                           set_value('nama_barang',$barang_beli_detail['nama_barang'].'-'.$barang_beli_detail['kode_barang'].'-'.$barang_beli_detail['id_satuan']),
+                           'class="form-control input-sm "  onchange="pilih_barang(this)"'
+                           );             
+                  ?>
+                 <?php echo form_error('status');?>
+                 <input type="hidden"  name="nama_barang[]" value="<?php echo $barang_beli_detail['nama_barang']?>" class="form-control input-sm"/>
+                </td>
+                  <td><input type="text" readonly name="kode_barang[]" value=<?php echo $barang_beli_detail['kode_barang']?> class="form-control input-sm"/></td>
+                  <td><input type="text" name="harga[]" value=<?php echo $barang_beli_detail['harga']?> onchange="hitung(this)" class="form-control input-sm number"/></td>
+                  <td><input type="text" name="jumlah[]" value=<?php echo $barang_beli_detail['jumlah']?> onchange="hitung(this)" size="3"  class="form-control input-sm number"/></td>
+                  <td><input type="text" readonly name="id_satuan[]" value=<?php echo $barang_beli_detail['id_satuan']?> size="3" class="form-control input-sm"/></td>
+                  <td><input type="text" readonly name="total_harga[]" value=<?php echo $barang_beli_detail['total_harga']?> class="form-control input-sm number"/></td>
+                  <?php $a++;$sub_total += $barang_beli_detail['total_harga']?>
+                </tr>
+                <?php endforeach?>
+                <?php else:?>
                 <tr id="data_0" class="barang_items">
                   <td> 
                     <a href="javascript:;" onclick="hapus_barang(this)" class="btn btn-danger btn-sm" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Hapus Barang">
@@ -136,6 +166,7 @@
                   <td><input type="text" readonly name="id_satuan[]" size="3" class="form-control input-sm"/></td>
                   <td><input type="text" readonly name="total_harga[]" class="form-control input-sm number"/></td>
                 </tr>
+                <?php endif?>
               </tbody>
             </table>
             <a href="javascript:;" onclick="tambah_barang()" class="btn btn-success btn-sm" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Tambah Barang">
@@ -156,7 +187,7 @@
                 <tr>
                   <th style="width:50%">Sub total:</th>
                   <td><?php            
-                  $sub_total = 0;      
+                       
                    echo form_input(
                                 array(
                                  'name'         => 'sub_total',
@@ -287,6 +318,13 @@
     total_val = parseFloat(harga)*parseFloat(jumlah);
     total = $('#'+parent+' input[name="total_harga[]"]').val(total_val);
 
+    
+
+    hitung_total();
+  }
+
+  function hitung_total(){
+
     // sub total
     sub_total_val = parseFloat(0);
     $( "tr.barang_items" ).each(function( index ) {
@@ -296,11 +334,6 @@
       sub_total_val += parseFloat(val_tmp);
     });
     $('#sub_total').val(sub_total_val); 
-
-    hitung_total();
-  }
-
-  function hitung_total(){
 
     // grand total
     total_diskon =  $('#total_diskon').val();
