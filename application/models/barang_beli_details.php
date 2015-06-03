@@ -41,6 +41,18 @@ class barang_beli_details extends CI_Model
         }
     }
 
+    public function get_barang_detail($id_barang_beli){
+        $result = $this->db->get_where('barang_beli_detail',array('id_barang_beli'=>$id_barang_beli));
+
+        if ($result->num_rows() > 0) 
+        {
+            return $result->result_array();
+        } 
+        else 
+        {
+            return array();
+        }
+    }
     
 
     /**
@@ -179,27 +191,8 @@ class barang_beli_details extends CI_Model
     *  @return void
     *
     */
-    public function save() 
+    public function save($data) 
     {
-        $data = array(
-        
-            'id_barang_jual' => strip_tags($this->input->post('id_barang_jual', TRUE)),
-        
-            'nama_barang' => strip_tags($this->input->post('nama_barang', TRUE)),
-        
-            'kode_barang' => strip_tags($this->input->post('kode_barang', TRUE)),
-        
-            'jumlah' => strip_tags($this->input->post('jumlah', TRUE)),
-        
-            'id_satuan' => strip_tags($this->input->post('id_satuan', TRUE)),
-        
-            'harga' => strip_tags($this->input->post('harga', TRUE)),
-        
-            'total_harga' => strip_tags($this->input->post('total_harga', TRUE)),
-        
-        );
-        
-        
         $this->db->insert('barang_beli_detail', $data);
     }
     

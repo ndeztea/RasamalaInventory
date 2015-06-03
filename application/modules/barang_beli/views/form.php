@@ -46,6 +46,19 @@
                   ?>
                  <?php echo form_error('nama');?>
               <?php                  
+                   echo form_input(
+                                array(
+                                 'name'         => 'hp',
+                                 'id'           => 'hp',                       
+                                 'class'        => 'form-control input-sm  required',
+                                 'placeholder'  => 'HP',
+                                 'maxlength'=>'255'
+                                 ),
+                                 set_value('hp',$barang_beli['hp'])
+                           );             
+                  ?>
+                 <?php echo form_error('nama');?>
+              <?php                  
                    echo form_textarea(
                             array(
                                 'id'            =>'alamat',
@@ -78,8 +91,8 @@
                            );             
                   ?>
                  <?php echo form_error('kode_beli');?>
-            <b>Payment Due:</b> <?php echo date('d/m/Y')?><br/>
-            <b>Account:</b> USERNAME
+            <b>Tanggal:</b> <?php echo date('d/m/Y')?><br/>
+            <b>Account:</b> <?php echo $this->session->userdata('nama')?>
           </div><!-- /.col -->
         </div><!-- /.row -->
 
@@ -91,7 +104,7 @@
                 <tr>
                   <th>#</th>
                   <th>Nama Barang</th>
-                  <th  style="display: none">Kode Barang</th>
+                  <th>Kode Barang</th>
                   <th>Harga</th>
                   <th>Jumlah</th>
                   <th>Satuan</th>
@@ -99,11 +112,12 @@
                 </tr>
               </thead>
               <tbody class="data-detail">
-                <tr>
-                  <td> <a href="javascript:;" onclick="hapus_barang(this)" class="btn btn-danger btn-sm" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Hapus Barang">
-                    <i class="glyphicon glyphicon-minus"></i>
-                  </a>
-                </td>
+                <tr id="data_0" class="barang_items">
+                  <td> 
+                    <a href="javascript:;" onclick="hapus_barang(this)" class="btn btn-danger btn-sm" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Hapus Barang">
+                      <i class="glyphicon glyphicon-minus"></i>
+                    </a>
+                  </td>
                   <td>
                   <?php                  
                    echo form_dropdown(
@@ -114,13 +128,13 @@
                            );             
                   ?>
                  <?php echo form_error('status');?>
-                 <input type="text" style="display: none" name="nama_barang[]" class="form-control input-sm"/>
+                 <input type="hidden"  name="nama_barang[]" class="form-control input-sm"/>
                 </td>
-                  <td  style="display: none"><input type="text" name="kode_barang[]" class="form-control input-sm"/></td>
-                  <td><input type="text" name="harga[]" class="form-control input-sm number"/></td>
-                  <td><input type="text" name="jumlah[]"  size="3"  class="form-control input-sm number"/></td>
-                  <td><input type="text" name="id_satuan[]" size="3" class="form-control input-sm"/></td>
-                  <td><input type="text" name="total_harga[]" class="form-control input-sm"/></td>
+                  <td><input type="text" readonly name="kode_barang[]" class="form-control input-sm"/></td>
+                  <td><input type="text" name="harga[]"  onchange="hitung(this)" class="form-control input-sm number"/></td>
+                  <td><input type="text" name="jumlah[]" onchange="hitung(this)" size="3"  class="form-control input-sm number"/></td>
+                  <td><input type="text" readonly name="id_satuan[]" size="3" class="form-control input-sm"/></td>
+                  <td><input type="text" readonly name="total_harga[]" class="form-control input-sm number"/></td>
                 </tr>
               </tbody>
             </table>
@@ -149,7 +163,8 @@
                                  'id'           => 'sub_total',                       
                                  'class'        => 'form-control input-sm  required number',
                                  'placeholder'  => 'sub total',
-                                 'maxlength'=>'11'
+                                 'maxlength'=>'11',
+                                 'readonly'=>'readonly'
                                  ),
                                  set_value('sub_total',$sub_total)
                            );             
@@ -165,6 +180,7 @@
                                  'id'           => 'total_diskon',                       
                                  'class'        => 'form-control input-sm number ',
                                  'placeholder'  => 'Total Diskon',
+                                 'onchange'     => 'hitung_total(this)'
                                  
                                  ),
                                  set_value('total_diskon',$barang_beli['total_diskon'])
@@ -182,12 +198,32 @@
                                  'id'           => 'total_ongkoskirim',                       
                                  'class'        => 'form-control input-sm number',
                                  'placeholder'  => 'Total Ongkoskirim',
+                                 'onchange'     => 'hitung_total()'
                                  
                                  ),
                                  set_value('total_ongkoskirim',$barang_beli['total_ongkoskirim'])
                            );             
                   ?>
                  <?php echo form_error('total_ongkoskirim');?></td>
+                </tr>
+                <tr>
+                  <th>Total Upah:</th>
+                  <td>
+                    <?php                  
+                   echo form_input(
+                                array(
+                                 'name'         => 'total_upah',
+                                 'id'           => 'total_upah',                       
+                                 'class'        => 'form-control input-sm number',
+                                 'placeholder'  => 'Total Upah',
+                                 'onchange'     => 'hitung_total()'
+                                 
+                                 ),
+                                 set_value('total_upah',$barang_beli['total_upah'])
+                           );             
+                  ?>
+                 <?php echo form_error('total_upah');?>
+                  </td>
                 </tr>
                 <tr>
                   <th>Total:</th>
@@ -198,6 +234,7 @@
                                  'id'           => 'total',                       
                                  'class'        => 'form-control input-sm  required number',
                                  'placeholder'  => 'Total',
+                                 'readonly'     => 'readonly',
                                  
                                  ),
                                  set_value('total',$barang_beli['total'])
@@ -224,182 +261,10 @@
           </div><!-- /.col -->
         </div><!-- /.row -->
       </section><!-- /.content -->
-
-         
-                       
-               <div class="form-group">
-                   <label for="kode_beli" class="col-sm-2 control-label">Kode Beli <span class="required-input">*</span></label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'kode_beli',
-                                 'id'           => 'kode_beli',                       
-                                 'class'        => 'form-control input-sm  required',
-                                 'placeholder'  => 'Kode Beli',
-                                 'maxlength'=>'11'
-                                 ),
-                                 set_value('kode_beli',$barang_beli['kode_beli'])
-                           );             
-                  ?>
-                 <?php echo form_error('kode_beli');?>
-                </div>
-              </div> <!--/ Kode Beli -->
-                          
-               <div class="form-group">
-                   <label for="nama" class="col-sm-2 control-label">Nama <span class="required-input">*</span></label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'nama',
-                                 'id'           => 'nama',                       
-                                 'class'        => 'form-control input-sm  required',
-                                 'placeholder'  => 'Nama',
-                                 'maxlength'=>'255'
-                                 ),
-                                 set_value('nama',$barang_beli['nama'])
-                           );             
-                  ?>
-                 <?php echo form_error('nama');?>
-                </div>
-              </div> <!--/ Nama -->
-                          
-               <div class="form-group">
-                   <label for="alamat" class="col-sm-2 control-label">Alamat <span class="required-input">*</span></label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_textarea(
-                            array(
-                                'id'            =>'alamat',
-                                'name'          =>'alamat',
-                                'rows'          =>'3',
-                                'class'         =>'form-control input-sm  required',
-                                'placeholder'   =>'Alamat',
-                                
-                                ),
-                            set_value('alamat',$barang_beli['alamat'])                           
-                            );             
-                  ?>
-                 <?php echo form_error('alamat');?>
-                </div>
-              </div> <!--/ Alamat -->
-                          
-               <div class="form-group">
-                   <label for="hp" class="col-sm-2 control-label">Hp</label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'hp',
-                                 'id'           => 'hp',                       
-                                 'class'        => 'form-control input-sm ',
-                                 'placeholder'  => 'Hp',
-                                 'maxlength'=>'100'
-                                 ),
-                                 set_value('hp',$barang_beli['hp'])
-                           );             
-                  ?>
-                 <?php echo form_error('hp');?>
-                </div>
-              </div> <!--/ Hp -->
-                          
-               <div class="form-group">
-                   <label for="total_diskon" class="col-sm-2 control-label">Total Diskon</label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'total_diskon',
-                                 'id'           => 'total_diskon',                       
-                                 'class'        => 'form-control input-sm ',
-                                 'placeholder'  => 'Total Diskon',
-                                 
-                                 ),
-                                 set_value('total_diskon',$barang_beli['total_diskon'])
-                           );             
-                  ?>
-                 <?php echo form_error('total_diskon');?>
-                </div>
-              </div> <!--/ Total Diskon -->
-                          
-               <div class="form-group">
-                   <label for="total_ongkoskirim" class="col-sm-2 control-label">Total Ongkoskirim</label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'total_ongkoskirim',
-                                 'id'           => 'total_ongkoskirim',                       
-                                 'class'        => 'form-control input-sm ',
-                                 'placeholder'  => 'Total Ongkoskirim',
-                                 
-                                 ),
-                                 set_value('total_ongkoskirim',$barang_beli['total_ongkoskirim'])
-                           );             
-                  ?>
-                 <?php echo form_error('total_ongkoskirim');?>
-                </div>
-              </div> <!--/ Total Ongkoskirim -->
-                          
-               <div class="form-group">
-                   <label for="total_upah" class="col-sm-2 control-label">Total Upah</label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'total_upah',
-                                 'id'           => 'total_upah',                       
-                                 'class'        => 'form-control input-sm ',
-                                 'placeholder'  => 'Total Upah',
-                                 
-                                 ),
-                                 set_value('total_upah',$barang_beli['total_upah'])
-                           );             
-                  ?>
-                 <?php echo form_error('total_upah');?>
-                </div>
-              </div> <!--/ Total Upah -->
-                          
-               <div class="form-group">
-                   <label for="total" class="col-sm-2 control-label">Total <span class="required-input">*</span></label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'total',
-                                 'id'           => 'total',                       
-                                 'class'        => 'form-control input-sm  required',
-                                 'placeholder'  => 'Total',
-                                 
-                                 ),
-                                 set_value('total',$barang_beli['total'])
-                           );             
-                  ?>
-                 <?php echo form_error('total');?>
-                </div>
-              </div> <!--/ Total -->
-                          
-               <div class="form-group">
-                   <label for="status" class="col-sm-2 control-label">Status</label>
-                <div class="col-sm-6">                                   
-                  <?php                  
-                   echo form_dropdown(
-                           'status',
-                           $statuss,  
-                           set_value('status',$barang_beli['status']),
-                           'class="form-control input-sm "  id="status"'
-                           );             
-                  ?>
-                 <?php echo form_error('status');?>
-                </div>
-              </div> <!--/ Status -->
-               
-           
       </div> <!--/ Panel Body -->
     <div class="panel-footer">   
           <div class="row"> 
-              <div class="col-md-10 col-sm-12 col-md-offset-2 col-sm-offset-0">
+              <div>
                    <a href="<?php echo site_url('barang_beli'); ?>" class="btn btn-default">
                        <i class="glyphicon glyphicon-chevron-left"></i> Kembali
                    </a> 
@@ -413,17 +278,58 @@
 <?php echo form_close(); ?>  
 
 <script>
+  function hitung(elm){
+    parent = $(elm).parent().parent().attr('id');
+    harga = $('#'+parent+' input[name="harga[]"]').val();
+    jumlah = $('#'+parent+' input[name="jumlah[]"]').val();
+
+    // total setiap items
+    total_val = parseFloat(harga)*parseFloat(jumlah);
+    total = $('#'+parent+' input[name="total_harga[]"]').val(total_val);
+
+    // sub total
+    sub_total_val = parseFloat(0);
+    $( "tr.barang_items" ).each(function( index ) {
+      console.log(this);
+      barang_items_id = $( this ).attr('id');
+      val_tmp = $('#'+barang_items_id+' input[name="total_harga[]"]').val();
+      sub_total_val += parseFloat(val_tmp);
+    });
+    $('#sub_total').val(sub_total_val); 
+
+    hitung_total();
+  }
+
+  function hitung_total(){
+
+    // grand total
+    total_diskon =  $('#total_diskon').val();
+    total_ongkoskirim = $('#total_ongkoskirim').val();
+    total_upah = $('#total_upah').val();
+    total_diskon = total_diskon==''?0:parseFloat(total_diskon);
+    total_ongkoskirim = total_ongkoskirim==''?0:parseFloat(total_ongkoskirim);
+    total_upah = total_upah==''?0:parseFloat(total_upah);
+
+    grand_total = (sub_total_val-total_diskon)+total_ongkoskirim+total_upah;
+    $('#total').val(grand_total);
+  }
+
+
+
  function pilih_barang(elm){
-  parent = $(elm).val().parent();
-  console.log(parent);
+  parent = $(elm).parent().parent().attr('id');
+
   data = $(elm).val();
   arr = data.split('-');
+  $('#'+parent+' input[name="id_satuan[]"]').val(arr[2]);
+  $('#'+parent+' input[name="kode_barang[]"]').val(arr[1]);
+  $('#'+parent+' input[name="nama_barang[]"]').val(arr[0]);
 
  }
 
  function tambah_barang(){
   elem = $('.data-detail tr').first().html();
-  $('.data-detail').append('<tr>'+elem+'</tr>');
+  $('.data-detail').append('<tr class="barang_items" id="data_'+$('.data-detail tr').length+'">'+elem+'</tr>');
  }
 
  function hapus_barang(elm){

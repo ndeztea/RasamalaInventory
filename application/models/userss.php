@@ -150,6 +150,10 @@ class userss extends CI_Model
         }
     }
 
+    public function get_nama($id){
+        $data  = $this->get_one($id);
+        return $data['nama'];
+    }
     
     
     

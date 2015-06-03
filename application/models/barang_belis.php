@@ -28,7 +28,7 @@ class barang_belis extends CI_Model
      */
     public function get_all($limit, $offset) 
     {
-
+        $this->db->order_by('id','desc');
         $result = $this->db->get('barang_beli', $limit, $offset);
 
         if ($result->num_rows() > 0) 
@@ -210,6 +210,7 @@ class barang_belis extends CI_Model
             'total_upah' => strip_tags($this->input->post('total_upah', TRUE)),
         
             'total' => strip_tags($this->input->post('total', TRUE)),
+            'id_user'=>$this->session->userdata('id'),
         
             'status' => strip_tags($this->input->post('status', TRUE)),
         
@@ -217,6 +218,8 @@ class barang_belis extends CI_Model
         
         
         $this->db->insert('barang_beli', $data);
+
+        return $this->db->insert_id();
     }
     
     

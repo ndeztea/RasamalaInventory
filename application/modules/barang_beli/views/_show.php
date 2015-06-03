@@ -1,33 +1,27 @@
 <div class="wrapper">
+      <div class="page-header">
+       <h3>Barang Beli</h3>
+      </div>
       <!-- Main content -->
       <section class="invoice">
         <!-- info row -->
         <div class="row invoice-info">
           <div class="col-sm-4 invoice-col">
-            From
+            <h4>Beli dari</h4>
             <address>
-              <strong>Admin, Inc.</strong><br>
-              795 Folsom Ave, Suite 600<br>
-              San Francisco, CA 94107<br>
-              Phone: (804) 123-5432<br/>
-              Email: info@almasaeedstudio.com
+              <strong><?php echo $barang_beli['nama']?></strong><br>
+              Alamat : <?php echo $barang_beli['alamat']?><br>
+              Telp/HP: <?php echo $barang_beli['hp']?><br/>
             </address>
           </div><!-- /.col -->
           <div class="col-sm-4 invoice-col">
-            To
-            <address>
-              <strong>John Doe</strong><br>
-              795 Folsom Ave, Suite 600<br>
-              San Francisco, CA 94107<br>
-              Phone: (555) 539-1037<br/>
-              Email: john.doe@example.com
-            </address>
+           
           </div><!-- /.col -->
           <div class="col-sm-4 invoice-col">
-            <b>Invoice #007612</b><br/>
+            <b>Kode <?php echo $barang_beli['kode_beli']?></b><br/>
             <br/>
-            <b>Payment Due:</b> 2/22/2014<br/>
-            <b>Account:</b> 968-34567
+            <b>Tanggal:</b> <?php echo format_tanggal($barang_beli['tanggal_update'])?><br/>
+            <b>Account:</b> <?php echo $this->userss->get_nama($barang_beli['id_user'])?>
           </div><!-- /.col -->
         </div><!-- /.row -->
 
@@ -37,42 +31,28 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Qty</th>
-                  <th>Product</th>
-                  <th>Serial #</th>
-                  <th>Description</th>
-                  <th>Subtotal</th>
+                  <th>#</th>
+                  <th>Nama Barang</th>
+                  <th>Kode Barang</th>
+                  <th>Harga</th>
+                  <th>Jumlah</th>
+                  <th>Satuan</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
+                <?php $a=$sub_total=0;foreach($barang_beli_details as $barang_beli_detail): $a++;?>
                 <tr>
-                  <td>1</td>
-                  <td>Call of Duty</td>
-                  <td>455-981-221</td>
-                  <td>El snort testosterone trophy driving gloves handsome</td>
-                  <td>$64.50</td>
+                  <td><?php echo $a?></td>
+                  <td><?php echo $barang_beli_detail['nama_barang']?></td>
+                  <td><?php echo $barang_beli_detail['kode_barang']?></td>
+                  <td  class="number"><?php echo format_uang($barang_beli_detail['harga'])?></td>
+                  <td><?php echo $barang_beli_detail['jumlah']?></td>
+                  <td><?php echo $barang_beli_detail['id_satuan']?></td>
+                  <td class="number"><?php echo format_uang($barang_beli_detail['total_harga'])?></td>
+                  <?php $sub_total += $barang_beli_detail['total_harga']?>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Need for Speed IV</td>
-                  <td>247-925-726</td>
-                  <td>Wes Anderson umami biodiesel</td>
-                  <td>$50.00</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Monsters DVD</td>
-                  <td>735-845-642</td>
-                  <td>Terry Richardson helvetica tousled street art master</td>
-                  <td>$10.70</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Grown Ups Blue Ray</td>
-                  <td>422-568-642</td>
-                  <td>Tousled lomo letterpress</td>
-                  <td>$25.99</td>
-                </tr>
+              <?php endforeach?>
               </tbody>
             </table>
           </div><!-- /.col -->
@@ -80,72 +60,60 @@
 
         <div class="row">
           <div class="col-xs-6">
-            <p class="lead">Payment Methods:</p>
+            <!--p class="lead">Payment Methods:</p>
            
             <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
               Lakukan pembayaran ke
-            </p>
+            </p-->
           </div><!-- /.col -->
           <!-- accepted payments column -->
           <div class="col-xs-6">
-            <p class="lead">Amount Due 2/22/2014</p>
+            <p class="lead">TOTAL</p>
             <div class="table-responsive">
               <table class="table">
                 <tr>
-                  <th style="width:50%">Subtotal:</th>
-                  <td>$250.30</td>
+                  <th style="width:50%">Sub total:</th>
+                  <td class="number"><?php echo format_uang($sub_total)?></td>
                 </tr>
                 <tr>
-                  <th>Tax (9.3%)</th>
-                  <td>$10.34</td>
+                  <th>Total Diskon</th>
+                  <td class="number"><?php echo format_uang($barang_beli['total_diskon'])?>
+                  </td>
                 </tr>
                 <tr>
-                  <th>Shipping:</th>
-                  <td>$5.80</td>
+                  <th>Total Ongkos Kirim:</th>
+                  <td class="number"><?php echo format_uang($barang_beli['total_ongkoskirim'])?></td>
+                </tr>
+                <tr>
+                  <th>Total Upah:</th>
+                  <td class="number"><?php echo format_uang($barang_beli['total_upah'])?>
+                  </td>
                 </tr>
                 <tr>
                   <th>Total:</th>
-                  <td>$265.24</td>
+                  <td class="number"><strong><?php echo format_uang($barang_beli['total'])?></strong></td>
+                </tr>
+                <tr>
+                  <th>Status:</th>
+                  <td><strong><?php echo $this->statuss->get_status_name($barang_beli['status'])?></strong>
+                  </td>
                 </tr>
               </table>
             </div>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </section><!-- /.content -->
-
-<div class="page-header">
-    <h3>Barang Beli</h3>
-</div>
-<?php 
-    if($barang_beli) :
-?> 
-
-<table id="detail" class="table table-striped table-condensed">
-    <tbody>
-    <?php     
-        foreach($barang_beli as $table => $value) :    
-    ?>
-    <tr>
-        <td width="20%" align="right"><strong><?php echo $table ?></strong></td>
-        <td><?php echo $value ?></td>
-    </tr>
-     <?php 
-        endforeach;
-     ?>
-     </tbody>
-</table>
-
-
-	<?php 
-	
-		echo anchor(site_url('barang_beli'), '<span class="fa fa-chevron-left"></span> Kembali', 'class="btn btn-sm btn-default"');
-	
-	?>
-
-
-<br /><br />
-
-<?php 
-    endif;
-?>
+      <div class="panel-footer">   
+          <div class="row"> 
+              <div>
+                   <a href="<?php echo site_url('barang_beli'); ?>" class="btn btn-default">
+                       <i class="glyphicon glyphicon-chevron-left"></i> Kembali
+                   </a> 
+                    <button type="submit" class="btn btn-primary" name="post">
+                        <i class="glyphicon glyphicon-floppy-save"></i> Simpan 
+                    </button>                  
+              </div>
+          </div>
+    </div><!--/ Panel Footer -->       
+</div><!--/ Panel -->
 

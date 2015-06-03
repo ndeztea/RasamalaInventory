@@ -38,6 +38,7 @@ class logins extends CI_Model
 				foreach ($result->result() as $row) {
 					$data = array(
 								  'username' => $row->username,
+								  'nama' => $row->nama,
 								  'password' => $row->password,
 								  'id' => $row->id,
 								  'level' => $levels

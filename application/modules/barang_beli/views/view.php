@@ -46,7 +46,7 @@
             <thead>
               <tr>
                 <th class="header">#</th>
-                
+                    <th>Tanggal</th>
                     <th>Kode Beli</th>   
                 
                     <th>Nama</th>   
@@ -55,11 +55,11 @@
                 
                     <th>Hp</th>   
                 
-                    <th>Total Diskon</th>   
+                    <!--th>Total Diskon</th>   
                 
                     <th>Total Ongkoskirim</th>   
                 
-                    <th>Total Upah</th>   
+                    <th>Total Upah</th-->   
                 
                     <th>Total</th>   
                 
@@ -73,8 +73,17 @@
             <tbody>
              
                <?php foreach ($barang_belis as $barang_beli) : ?>
-              <tr>
+                <?php 
+                $class = '';
+                if($barang_beli['status']==1){
+                  $class = 'class="success"';
+                }elseif($barang_beli['status']==2){
+                  $class = 'class="warning-stocks"';
+                }
+               ?>
+              <tr <?php echo $class?>>
               	<td><?php echo $number++;; ?> </td>
+                <td><?php echo format_tanggal($barang_beli['tanggal_update']); ?></td>
                
                <td><?php echo $barang_beli['kode_beli']; ?></td>
                
@@ -84,15 +93,15 @@
                
                <td><?php echo $barang_beli['hp']; ?></td>
                
-               <td><?php echo $barang_beli['total_diskon']; ?></td>
+               <!--td><?php echo format_uang($barang_beli['total_diskon']); ?></td>
                
-               <td><?php echo $barang_beli['total_ongkoskirim']; ?></td>
+               <td><?php echo format_uang($barang_beli['total_ongkoskirim']); ?></td>
                
-               <td><?php echo $barang_beli['total_upah']; ?></td>
+               <td><?php echo format_uang($barang_beli['total_upah']); ?></td-->
                
-               <td><?php echo $barang_beli['total']; ?></td>
+               <td><?php echo format_uang($barang_beli['total']); ?></td>
                
-               <td><?php echo $barang_beli['status']; ?></td>
+               <td><?php echo $this->statuss->get_status_name($barang_beli['status']); ?></td>
                
                 <td>    
                     

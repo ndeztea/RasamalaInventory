@@ -17,7 +17,9 @@ class barang_beli extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('barang_belis');
+        $this->load->model('barang_beli_details');
         $this->load->model('statuss');
+        $this->load->model('userss');
 
         if(!$this->session->userdata('level'))
             {  
@@ -208,13 +210,40 @@ class barang_beli extends MY_Controller
                       if ($this->input->post()) 
                       {
                           
-                          $this->barang_belis->save();
+                          $id_barang_beli = $this->barang_belis->save();
+                          
+                           // save data barang detail
+                          $nama_barang = $this->input->post('nama_barang');
+                          $kode_barang = $this->input->post('kode_barang');
+                          $jumlah = $this->input->post('jumlah');
+                          $id_satuan = $this->input->post('id_satuan');
+                          $harga = $this->input->post('harga');
+                          $total_harga = $this->input->post('total_harga');
+
+                          for($a=0;$a<count($nama_barang);$a++){
+                            $data_barang_detail = array(
+                                'id_barang_beli' => strip_tags($id_barang_beli),
+                                'nama_barang' => strip_tags($nama_barang[$a]),
+                                'kode_barang' => strip_tags($kode_barang[$a]),
+                                'jumlah' => strip_tags($jumlah[$a]),
+                                'id_satuan' => strip_tags($id_satuan[$a]),
+                                'harga' => strip_tags($harga[$a]),
+                                'total_harga' => strip_tags($total_harga[$a]),
+                            
+                            );
+                            $this->barang_beli_details->save($data_barang_detail);
+                          }
+                          
+                          
+
                           $this->session->set_flashdata('notif', notify('Data berhasil di simpan','success'));
                           redirect('barang_beli');
                       }
                   } 
                   else // If validation incorrect 
                   {
+                        $this->session->set_flashdata('notif', notify('Data gagal di simpan','success'));
+                        //redirect('barang_beli');
                       $this->add();
                   }
          }
@@ -249,7 +278,9 @@ class barang_beli extends MY_Controller
         if ($id != '') 
         {
 
-            $data['barang_beli'] = $this->barang_belis->get_one($id);            
+            $data['barang_beli'] = $this->barang_belis->get_one($id); 
+            $data['barang_beli_details'] = $this->barang_beli_details->get_barang_detail($id);
+
             $this->template->render('barang_beli/_show',$data);
             
         }
