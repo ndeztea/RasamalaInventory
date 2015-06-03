@@ -17,7 +17,7 @@
    
     <title><?php echo set_label($this->uri->segment(1))?> - CV. RASAMALA</title>
     <link href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo base_url(); ?>assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="<?php echo base_url(); ?>assets/css/main.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/parsley/parsley.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url(); ?>assets/datepicker/datepicker3.min.css" rel="stylesheet" type="text/css">

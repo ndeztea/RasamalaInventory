@@ -2,7 +2,7 @@
 
 /**
  * Description of barang_jual
- * @created on : Monday, 25-May-2015 07:36:14
+ * @created on : Monday, 25-May-2015 07:36:58
  * @author DAUD D. SIMBOLON <daud.simbolon@gmail.com>
  * Copyright 2015    
  */
@@ -28,7 +28,7 @@ class barang_juals extends CI_Model
      */
     public function get_all($limit, $offset) 
     {
-
+        $this->db->order_by('id','desc');
         $result = $this->db->get('barang_jual', $limit, $offset);
 
         if ($result->num_rows() > 0) 
@@ -210,6 +210,7 @@ class barang_juals extends CI_Model
             'total_upah' => strip_tags($this->input->post('total_upah', TRUE)),
         
             'total' => strip_tags($this->input->post('total', TRUE)),
+            'id_user'=>$this->session->userdata('id'),
         
             'status' => strip_tags($this->input->post('status', TRUE)),
         
@@ -217,6 +218,8 @@ class barang_juals extends CI_Model
         
         
         $this->db->insert('barang_jual', $data);
+
+        return $this->db->insert_id();
     }
     
     
@@ -287,19 +290,19 @@ class barang_juals extends CI_Model
 
     
     
-    // get barang_beli
-    public function get_barang_beli() 
+    // get barang_jual
+    public function get_barang_jual() 
     {
       
-        $result = $this->db->get('barang_beli')
+        $result = $this->db->get('barang_jual')
                            ->result();
 
-        $ret ['']= 'Pilih Barang Beli :';
+        $ret ['']= 'Pilih Barang Jual :';
         if($result)
         {
             foreach ($result as $key => $row)
             {
-                $ret [$row->id] = $row->kode_beli;
+                $ret [$row->id] = $row->kode_jual;
             }
         }
         

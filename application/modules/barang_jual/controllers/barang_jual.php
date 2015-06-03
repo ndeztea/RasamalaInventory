@@ -2,7 +2,7 @@
 
 /**
  * Controller barang_jual
- * @created on : Monday, 25-May-2015 07:36:14
+ * @created on : Monday, 25-May-2015 07:36:58
  * @author Daud D. Simbolon <daud.simbolon@gmail.com>
  * Copyright 2015
  *
@@ -17,11 +17,18 @@ class barang_jual extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('barang_juals');
+        $this->load->model('barang_jual_details');
         $this->load->model('statuss');
-        if(empty($this->session->userdata('level')))
+        $this->load->model('userss');
+
+        if(!$this->session->userdata('level'))
             {  
                 redirect(site_url('login/'));
             }     
+       //     echo $this->session->flashdata('notif');
+        $this->load->model('barang_stocks');
+        $this->load->model('satuans');
+
     }
     
 
@@ -60,16 +67,23 @@ class barang_jual extends MY_Controller
     {       
         $data['barang_jual'] = $this->barang_juals->add();
         $data['action']  = 'barang_jual/save';
-     
-       $data['barang_beli'] = $this->barang_juals->get_barang_beli();
+            
+        // list nama barang
+        $nama_barangs_tmp = $this->barang_stocks->get_all(1000,0);
+        $nama_barangs[0] = '-Pilih Barang-';
+        foreach($nama_barangs_tmp as $row){
+            $nama_barangs[$row['nama_barang'].'|'.$row['kode_barang'].'|'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
+        }
+        $data['nama_barangs']  = $nama_barangs;
+        $data['nama_barangs_tmp'] = $nama_barangs_tmp;
 
-        // list status
+       // list status
         $user_status_temp = $this->statuss->get_all(100,0);
         foreach($user_status_temp as $row){
             $statuss[$row['id']] = $row['status'];
         }
         $data['statuss']  = $statuss;
-         
+     
         $this->template->js_add('
                 $(document).ready(function(){
                 // binds form submission and fields to the validation engine
@@ -88,20 +102,29 @@ class barang_jual extends MY_Controller
     */
     public function edit($id='') 
     {
-        if ($id != '') 
+        $data['barang_jual']      = $this->barang_juals->get_one($id);
+        if (!empty($data['barang_jual'])) 
         {
 
-            $data['barang_jual']      = $this->barang_juals->get_one($id);
             $data['action']       = 'barang_jual/save/' . $id;           
       
-           $data['barang_beli'] = $this->barang_juals->get_barang_beli();
+            // list nama barang
+        $nama_barangs_tmp = $this->barang_stocks->get_all(1000,0);
+        $nama_barangs[0] = '-Pilih Barang-';
+        foreach($nama_barangs_tmp as $row){
+            $nama_barangs[$row['nama_barang'].'|'.$row['kode_barang'].'|'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
+        }
+        $data['nama_barangs']  = $nama_barangs;
+        $data['nama_barangs_tmp'] = $nama_barangs_tmp;
 
-            // list status
-            $user_status_temp = $this->statuss->get_all(100,0);
-            foreach($user_status_temp as $row){
-                $statuss[$row['id']] = $row['status'];
-            }
-            $data['statuss']  = $statuss;
+       // list status
+        $user_status_temp = $this->statuss->get_all(100,0);
+        foreach($user_status_temp as $row){
+            $statuss[$row['id']] = $row['status'];
+        }
+        $data['statuss']  = $statuss;
+
+        $data['barang_jual_details'] = $this->barang_jual_details->get_barang_detail($id);
        
             $this->template->js_add('
                      $(document).ready(function(){
@@ -132,7 +155,7 @@ class barang_jual extends MY_Controller
                   
                     array(
                         'field' => 'kode_jual',
-                        'label' => 'Kode Jual',
+                        'label' => 'Kode Beli',
                         'rules' => 'trim|xss_clean|required'
                         ),
                     
@@ -196,13 +219,40 @@ class barang_jual extends MY_Controller
                       if ($this->input->post()) 
                       {
                           
-                          $this->barang_juals->save();
+                          $id_barang_jual = $this->barang_juals->save();
+                          
+                           // save data barang detail
+                          $nama_barang = $this->input->post('nama_barang');
+                          $kode_barang = $this->input->post('kode_barang');
+                          $jumlah = $this->input->post('jumlah');
+                          $id_satuan = $this->input->post('id_satuan');
+                          $harga = $this->input->post('harga');
+                          $total_harga = $this->input->post('total_harga');
+
+                          for($a=0;$a<count($nama_barang);$a++){
+                            $data_barang_detail = array(
+                                'id_barang_jual' => strip_tags($id_barang_jual),
+                                'nama_barang' => strip_tags($nama_barang[$a]),
+                                'kode_barang' => strip_tags($kode_barang[$a]),
+                                'jumlah' => strip_tags($jumlah[$a]),
+                                'id_satuan' => strip_tags($id_satuan[$a]),
+                                'harga' => strip_tags($harga[$a]),
+                                'total_harga' => strip_tags($total_harga[$a]),
+                            
+                            );
+                            $this->barang_jual_details->save($data_barang_detail);
+                          }
+                          
+                          
+
                           $this->session->set_flashdata('notif', notify('Data berhasil di simpan','success'));
                           redirect('barang_jual');
                       }
                   } 
                   else // If validation incorrect 
                   {
+                        $this->session->set_flashdata('notif', notify('Data gagal di simpan','success'));
+                        //redirect('barang_jual');
                       $this->add();
                   }
          }
@@ -215,6 +265,32 @@ class barang_jual extends MY_Controller
                     if ($this->input->post()) 
                     {
                         $this->barang_juals->update($id);
+                        
+                        // reset
+                        $this->barang_jual_details->destroy_parent($id);
+                         // save data barang detail
+                          $nama_barang = $this->input->post('nama_barang');
+                          $kode_barang = $this->input->post('kode_barang');
+                          $jumlah = $this->input->post('jumlah');
+                          $id_satuan = $this->input->post('id_satuan');
+                          $harga = $this->input->post('harga');
+                          $total_harga = $this->input->post('total_harga');
+
+                          for($a=0;$a<count($nama_barang);$a++){
+                            $data_barang_detail = array(
+                                'id_barang_jual' => strip_tags($id),
+                                'nama_barang' => strip_tags($nama_barang[$a]),
+                                'kode_barang' => strip_tags($kode_barang[$a]),
+                                'jumlah' => strip_tags($jumlah[$a]),
+                                'id_satuan' => strip_tags($id_satuan[$a]),
+                                'harga' => strip_tags($harga[$a]),
+                                'total_harga' => strip_tags($total_harga[$a]),
+                            
+                            );
+                            $this->barang_jual_details->save($data_barang_detail);
+                          }
+                          
+
                         $this->session->set_flashdata('notif', notify('Data berhasil di update','success'));
                         redirect('barang_jual');
                     }
@@ -232,12 +308,14 @@ class barang_jual extends MY_Controller
     * Detail barang_jual
     *
     */
-    public function show($id='') 
+    public function show($id='',$print='') 
     {
         if ($id != '') 
         {
 
-            $data['barang_jual'] = $this->barang_juals->get_one($id);            
+            $data['barang_jual'] = $this->barang_juals->get_one($id); 
+            $data['barang_jual_details'] = $this->barang_jual_details->get_barang_detail($id);
+            $data['print'] = $print;
             $this->template->render('barang_jual/_show',$data);
             
         }
@@ -292,6 +370,7 @@ class barang_jual extends MY_Controller
         if ($id) 
         {
             $this->barang_juals->destroy($id);           
+            $this->barang_jual_details->destroy_parent($id);
              $this->session->set_flashdata('notif', notify('Data berhasil di hapus','success'));
              redirect('barang_jual');
         } 

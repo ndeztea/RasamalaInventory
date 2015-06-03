@@ -2,7 +2,7 @@
 
 /**
  * Description of barang_jual_detail
- * @created on : Monday, 25-May-2015 07:39:06
+ * @created on : Monday, 25-May-2015 07:38:12
  * @author DAUD D. SIMBOLON <daud.simbolon@gmail.com>
  * Copyright 2015    
  */
@@ -41,6 +41,18 @@ class barang_jual_details extends CI_Model
         }
     }
 
+    public function get_barang_detail($id_barang_jual){
+        $result = $this->db->get_where('barang_jual_detail',array('id_barang_jual'=>$id_barang_jual));
+
+        if ($result->num_rows() > 0) 
+        {
+            return $result->result_array();
+        } 
+        else 
+        {
+            return array();
+        }
+    }
     
 
     /**
@@ -179,27 +191,8 @@ class barang_jual_details extends CI_Model
     *  @return void
     *
     */
-    public function save() 
+    public function save($data) 
     {
-        $data = array(
-        
-            'id_barang_jual' => strip_tags($this->input->post('id_barang_jual', TRUE)),
-        
-            'nama_barang' => strip_tags($this->input->post('nama_barang', TRUE)),
-        
-            'kode_barang' => strip_tags($this->input->post('kode_barang', TRUE)),
-        
-            'jumlah' => strip_tags($this->input->post('jumlah', TRUE)),
-        
-            'id_satuan' => strip_tags($this->input->post('id_satuan', TRUE)),
-        
-            'harga' => strip_tags($this->input->post('harga', TRUE)),
-        
-            'total_harga' => strip_tags($this->input->post('total_harga', TRUE)),
-        
-        );
-        
-        
         $this->db->insert('barang_jual_detail', $data);
     }
     
@@ -255,6 +248,13 @@ class barang_jual_details extends CI_Model
     public function destroy($id)
     {       
         $this->db->where('id', $id);
+        $this->db->delete('barang_jual_detail');
+        
+    }
+
+    public function destroy_parent($id_barang_jual)
+    {       
+        $this->db->where('id_barang_jual', $id_barang_jual);
         $this->db->delete('barang_jual_detail');
         
     }

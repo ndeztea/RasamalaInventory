@@ -2,7 +2,7 @@
 
 /**
  * Controller barang_jual_detail
- * @created on : Monday, 25-May-2015 07:39:06
+ * @created on : Monday, 25-May-2015 07:38:12
  * @author Daud D. Simbolon <daud.simbolon@gmail.com>
  * Copyright 2015
  *

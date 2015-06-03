@@ -126,7 +126,7 @@
     <div class="panel-footer">
         <div class="row">
            <div class="col-md-3">
-               Barang Jual Detail
+               Barang Beli Detail
                <span class="label label-info">
                     <?php echo $total; ?>
                </span>

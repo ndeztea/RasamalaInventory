@@ -20,15 +20,11 @@
                    <label for="id_barang_jual" class="col-sm-2 control-label">Id Barang Jual <span class="required-input">*</span></label>
                 <div class="col-sm-6">                                   
                   <?php                  
-                   echo form_input(
-                                array(
-                                 'name'         => 'id_barang_jual',
-                                 'id'           => 'id_barang_jual',                       
-                                 'class'        => 'form-control input-sm  required',
-                                 'placeholder'  => 'Id Barang Jual',
-                                 'maxlength'=>'11'
-                                 ),
-                                 set_value('id_barang_jual',$barang_jual_detail['id_barang_jual'])
+                   echo form_dropdown(
+                           'id_barang_jual',
+                           $id_barang_jual,  
+                           set_value('id_barang_jual',$barang_jual_detail['id_barang_jual']),
+                           'class="form-control input-sm  required"  id="id_barang_jual"'
                            );             
                   ?>
                  <?php echo form_error('id_barang_jual');?>
@@ -58,11 +54,15 @@
                    <label for="kode_barang" class="col-sm-2 control-label">Kode Barang <span class="required-input">*</span></label>
                 <div class="col-sm-6">                                   
                   <?php                  
-                   echo form_dropdown(
-                           'kode_barang',
-                           $kode_barang,  
-                           set_value('kode_barang',$barang_jual_detail['kode_barang']),
-                           'class="form-control input-sm  required"  id="kode_barang"'
+                   echo form_input(
+                                array(
+                                 'name'         => 'kode_barang',
+                                 'id'           => 'kode_barang',                       
+                                 'class'        => 'form-control input-sm  required',
+                                 'placeholder'  => 'Kode Barang',
+                                 'maxlength'=>'100'
+                                 ),
+                                 set_value('kode_barang',$barang_jual_detail['kode_barang'])
                            );             
                   ?>
                  <?php echo form_error('kode_barang');?>

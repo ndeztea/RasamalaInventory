@@ -46,8 +46,8 @@
             <thead>
               <tr>
                 <th class="header">#</th>
-                
-                    <th>Kode Jual</th>   
+                    <th>Tanggal</th>
+                    <th>Kode Beli</th>   
                 
                     <th>Nama</th>   
                 
@@ -55,11 +55,11 @@
                 
                     <th>Hp</th>   
                 
-                    <th>Total Diskon</th>   
+                    <!--th>Total Diskon</th>   
                 
                     <th>Total Ongkoskirim</th>   
                 
-                    <th>Total Upah</th>   
+                    <th>Total Upah</th-->   
                 
                     <th>Total</th>   
                 
@@ -73,8 +73,17 @@
             <tbody>
              
                <?php foreach ($barang_juals as $barang_jual) : ?>
-              <tr>
+                <?php 
+                $class = '';
+                if($barang_jual['status']==1){
+                  $class = 'class="success"';
+                }elseif($barang_jual['status']==2){
+                  $class = 'class="warning-stocks"';
+                }
+               ?>
+              <tr <?php echo $class?>>
               	<td><?php echo $number++;; ?> </td>
+                <td><?php echo format_tanggal($barang_jual['tanggal_update']); ?></td>
                
                <td><?php echo $barang_jual['kode_jual']; ?></td>
                
@@ -84,15 +93,15 @@
                
                <td><?php echo $barang_jual['hp']; ?></td>
                
-               <td><?php echo $barang_jual['total_diskon']; ?></td>
+               <!--td><?php echo format_uang($barang_jual['total_diskon']); ?></td>
                
-               <td><?php echo $barang_jual['total_ongkoskirim']; ?></td>
+               <td><?php echo format_uang($barang_jual['total_ongkoskirim']); ?></td>
                
-               <td><?php echo $barang_jual['total_upah']; ?></td>
+               <td><?php echo format_uang($barang_jual['total_upah']); ?></td-->
                
-               <td><?php echo $barang_jual['total']; ?></td>
+               <td><?php echo format_uang($barang_jual['total']); ?></td>
                
-               <td><?php echo $barang_jual['status']; ?></td>
+               <td><?php echo $this->statuss->get_status_name($barang_jual['status']); ?></td>
                
                 <td>    
                     
@@ -134,7 +143,7 @@
     <div class="panel-footer">
         <div class="row">
            <div class="col-md-3">
-               Barang Jual
+               Barang Beli
                <span class="label label-info">
                     <?php echo $total; ?>
                </span>

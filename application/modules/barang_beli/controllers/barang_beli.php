@@ -72,7 +72,7 @@ class barang_beli extends MY_Controller
         $nama_barangs_tmp = $this->barang_stocks->get_all(1000,0);
         $nama_barangs[0] = '-Pilih Barang-';
         foreach($nama_barangs_tmp as $row){
-            $nama_barangs[$row['nama_barang'].'-'.$row['kode_barang'].'-'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
+            $nama_barangs[$row['nama_barang'].'|'.$row['kode_barang'].'|'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
         }
         $data['nama_barangs']  = $nama_barangs;
         $data['nama_barangs_tmp'] = $nama_barangs_tmp;
@@ -112,7 +112,7 @@ class barang_beli extends MY_Controller
         $nama_barangs_tmp = $this->barang_stocks->get_all(1000,0);
         $nama_barangs[0] = '-Pilih Barang-';
         foreach($nama_barangs_tmp as $row){
-            $nama_barangs[$row['nama_barang'].'-'.$row['kode_barang'].'-'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
+            $nama_barangs[$row['nama_barang'].'|'.$row['kode_barang'].'|'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
         }
         $data['nama_barangs']  = $nama_barangs;
         $data['nama_barangs_tmp'] = $nama_barangs_tmp;

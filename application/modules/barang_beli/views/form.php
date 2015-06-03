@@ -126,7 +126,7 @@
                    echo form_dropdown(
                            'nama_barang_tmp[]',
                            $nama_barangs,  
-                           set_value('nama_barang',$barang_beli_detail['nama_barang'].'-'.$barang_beli_detail['kode_barang'].'-'.$barang_beli_detail['id_satuan']),
+                           set_value('nama_barang',$barang_beli_detail['nama_barang'].'|'.$barang_beli_detail['kode_barang'].'|'.$barang_beli_detail['id_satuan']),
                            'class="form-control input-sm "  onchange="pilih_barang(this)"'
                            );             
                   ?>
@@ -353,7 +353,7 @@
   parent = $(elm).parent().parent().attr('id');
 
   data = $(elm).val();
-  arr = data.split('-');
+  arr = data.split('|');
   $('#'+parent+' input[name="id_satuan[]"]').val(arr[2]);
   $('#'+parent+' input[name="kode_barang[]"]').val(arr[1]);
   $('#'+parent+' input[name="nama_barang[]"]').val(arr[0]);
