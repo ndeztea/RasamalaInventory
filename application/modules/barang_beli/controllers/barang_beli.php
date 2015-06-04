@@ -241,6 +241,11 @@ class barang_beli extends MY_Controller
                             
                             );
                             $this->barang_beli_details->save($data_barang_detail);
+
+                            // min stock
+                            $stock_now = $this->barang_stocks->get_stocks($kode_barang[$a]);
+                            $stock_updated = $stock_now + $jumlah[$a];
+                            $this->barang_stocks->update_stocks($kode_barang[$a],$stock_updated);
                           }
                           
                           

@@ -138,6 +138,21 @@ class barang_stocks extends CI_Model
         }
     }
 
+    public function get_stocks($kode_barang) 
+    {
+        $this->db->where('kode_barang', $kode_barang);
+        $result = $this->db->get('barang_stock');
+
+        if ($result->num_rows() == 1) 
+        {
+            $data =  $result->row_array();
+            return $data['jumlah_stocks'];
+        } 
+        else 
+        {
+            return 0;
+        }
+    }
     
     
     
@@ -234,19 +249,16 @@ class barang_stocks extends CI_Model
         $this->db->update('barang_stock', $data);
     }
 
-    public function update_stocks($id,$jumlah_stocks){
+    public function update_stocks($kode_barang,$jumlah_stocks)
+    {
         $data = array(
-            'jumlah_stocks' => $jumlah_stocks);
-
-        $this->db->where('id', $id);
+                'jumlah_stocks' => $jumlah_stocks
+        );
+        
+        
+        $this->db->where('kode_barang', $kode_barang);
         $this->db->update('barang_stock', $data);
-
     }
-
-    
-
-
-    
     
     
     /**

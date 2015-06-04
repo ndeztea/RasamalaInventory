@@ -30,7 +30,7 @@
             </address>
           </div><!-- /.col -->
           <div class="col-sm-4 invoice-col">
-            <strong>Beli Ke</strong>
+            <strong>Beli Dari</strong>
             <address>
               <?php                  
                    echo form_input(
