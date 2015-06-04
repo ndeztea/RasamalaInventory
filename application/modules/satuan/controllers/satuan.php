@@ -17,7 +17,7 @@ class satuan extends MY_Controller
     {
         parent::__construct();         
         $this->load->model('satuans');
-      if(empty($this->session->userdata('level')))
+      if(!($this->session->userdata('level')))
             {  
                 redirect(site_url('login/'));
             }     

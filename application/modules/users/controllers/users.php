@@ -19,7 +19,7 @@ class users extends MY_Controller
         $this->load->model('userss');
         $this->load->model('users_aksess');
 
-       if(empty($this->session->userdata('level')))
+       if(!($this->session->userdata('level')))
             {  
                 redirect(site_url('login/'));
             }     

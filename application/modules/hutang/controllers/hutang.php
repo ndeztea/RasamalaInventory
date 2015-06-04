@@ -18,7 +18,7 @@ class hutang extends MY_Controller
         parent::__construct();         
         $this->load->model('hutangs');
         $this->load->model('statuss');
-      if(empty($this->session->userdata('level')))
+      if(!($this->session->userdata('level')))
             {  
                 redirect(site_url('login/'));
             }     
