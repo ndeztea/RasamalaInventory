@@ -70,9 +70,8 @@ class barang_jual extends MY_Controller
             
         // list nama barang
         $nama_barangs_tmp = $this->barang_stocks->get_all(1000,0);
-        $nama_barangs[0] = '-Pilih Barang-';
         foreach($nama_barangs_tmp as $row){
-            $nama_barangs[$row['nama_barang'].'|'.$row['kode_barang'].'|'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
+            $nama_barangs[$row['nama_barang']] = $row['nama_barang'].'|'.$row['kode_barang'].'|'.$this->satuans->get_satuan_name($row['id_satuan']).'|'.$row['harga_jual'];
         }
         $data['nama_barangs']  = $nama_barangs;
         $data['nama_barangs_tmp'] = $nama_barangs_tmp;
@@ -110,9 +109,8 @@ class barang_jual extends MY_Controller
       
             // list nama barang
         $nama_barangs_tmp = $this->barang_stocks->get_all(1000,0);
-        $nama_barangs[0] = '-Pilih Barang-';
         foreach($nama_barangs_tmp as $row){
-            $nama_barangs[$row['nama_barang'].'|'.$row['kode_barang'].'|'.$this->satuans->get_satuan_name($row['id_satuan'])] = $row['nama_barang'];
+            $nama_barangs[$row['nama_barang']] = $row['nama_barang'].'|'.$row['kode_barang'].'|'.$this->satuans->get_satuan_name($row['id_satuan']).'|'.$row['harga_jual'];
         }
         $data['nama_barangs']  = $nama_barangs;
         $data['nama_barangs_tmp'] = $nama_barangs_tmp;
@@ -308,7 +306,7 @@ class barang_jual extends MY_Controller
     * Detail barang_jual
     *
     */
-    public function show($id='',$print='') 
+    public function show($id='',$print='',$kwitansi='') 
     {
         if ($id != '') 
         {
@@ -316,7 +314,12 @@ class barang_jual extends MY_Controller
             $data['barang_jual'] = $this->barang_juals->get_one($id); 
             $data['barang_jual_details'] = $this->barang_jual_details->get_barang_detail($id);
             $data['print'] = $print;
-            $this->template->render('barang_jual/_show',$data);
+            if(!$kwitansi){
+                $this->template->render('barang_jual/_show',$data);
+            }else{
+                $this->template->render('barang_jual/_show_kwitansi',$data);
+            }
+            
             
         }
         else 

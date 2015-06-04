@@ -113,8 +113,13 @@
                        <i class="glyphicon glyphicon-chevron-left"></i> Kembali
                    </a> 
                     <a  class="btn btn-primary" href="<?php echo site_url('barang_jual/show/'.$barang_jual['id'].'/print')?>">
-                        <i class="glyphicon glyphicon-print"></i> Print 
-                    </a>                  
+                        <i class="glyphicon glyphicon-print"></i> Print  Faktur
+                    </a>   
+                    <?php if($barang_jual['status']==1):?>
+                    <a  class="btn btn-success" href="<?php echo site_url('barang_jual/show/'.$barang_jual['id'].'/print/kwitansi')?>">
+                        <i class="glyphicon glyphicon-print"></i> Print  Kwitansi
+                    </a> 
+                    <?php endif?>                 
               </div>
           </div>
     </div><!--/ Panel Footer -->  

@@ -54,6 +54,8 @@
                     <th>Category</th>   
                 
                     <th>Jumlah Stocks</th> 
+                    <th>Harga Beli</th>   
+                    <th>Harga Jual</th>   
                 
                 <th class="red header" align="right" width="120">Aksi</th>
               </tr>
@@ -73,7 +75,8 @@
                <td><?php echo $this->categorys->get_category_name($barang_stock['id_category'])?></td>
                
                <td><?php echo $barang_stock['jumlah_stocks']; ?> <?php echo $this->satuans->get_satuan_name($barang_stock['id_satuan'])?></td>
-               
+               <td><?php echo format_uang($barang_stock['harga_beli']); ?></td>
+               <td><?php echo format_uang($barang_stock['harga_jual']); ?></td>
                
                 <td>    
                     

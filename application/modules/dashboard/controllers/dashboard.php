@@ -16,7 +16,7 @@ class dashboard extends MY_Controller
     public function __construct() 
     {
         parent::__construct();
-        if(empty($this->session->userdata('level')))
+        if(!$this->session->userdata('level'))
             {  
                 redirect(site_url('login/'));
             }         

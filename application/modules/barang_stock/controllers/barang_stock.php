@@ -174,6 +174,16 @@ class barang_stock extends MY_Controller
                         'label' => 'Id Satuan',
                         'rules' => 'trim|xss_clean|required'
                         ),
+                    array(
+                        'field' => 'harga_jual',
+                        'label' => 'Harga Jual',
+                        'rules' => 'trim|xss_clean|required'
+                        ),
+                    array(
+                        'field' => 'harga_beli',
+                        'label' => 'Harga Beli',
+                        'rules' => 'trim|xss_clean|required'
+                        ),
                                
                   );
             

@@ -1,12 +1,12 @@
 <div class="row">
-	<div class="col-lg-12 col-md-12">		
-		<?php 
+  <div class="col-lg-12 col-md-12">   
+    <?php 
                 
-                echo create_breadcrumb();		
+                echo create_breadcrumb();   
                 //echo $this->session->flashdata('notify');
                 
                 ?>
-	</div>
+  </div>
 </div><!-- /.row -->
 
 <?php echo form_open(site_url('barang_beli/' . $action),'role="form" class="form-horizontal" id="form_barang_beli" parsley-validate'); ?>               
@@ -30,7 +30,7 @@
             </address>
           </div><!-- /.col -->
           <div class="col-sm-4 invoice-col">
-            <strong>Beli Dari</strong>
+            <strong>Beli Ke</strong>
             <address>
               <?php                  
                    echo form_input(
@@ -121,18 +121,7 @@
                       <i class="glyphicon glyphicon-minus"></i>
                     </a>
                   </td>
-                  <td>
-                  <?php                  
-                   echo form_dropdown(
-                           'nama_barang_tmp[]',
-                           $nama_barangs,  
-                           set_value('nama_barang',$barang_beli_detail['nama_barang'].'|'.$barang_beli_detail['kode_barang'].'|'.$barang_beli_detail['id_satuan']),
-                           'class="form-control input-sm "  onchange="pilih_barang(this)"'
-                           );             
-                  ?>
-                 <?php echo form_error('status');?>
-                 <input type="hidden"  name="nama_barang[]" value="<?php echo $barang_beli_detail['nama_barang']?>" class="form-control input-sm"/>
-                </td>
+                  <td><input type="text"  name="nama_barang[]"  onfocus="active_barang(this)" value="<?php echo $barang_beli_detail['nama_barang']?>" class="nama_barang form-control input-sm"/></td>
                   <td><input type="text" readonly name="kode_barang[]" value=<?php echo $barang_beli_detail['kode_barang']?> class="form-control input-sm"/></td>
                   <td><input type="text" name="harga[]" value=<?php echo $barang_beli_detail['harga']?> onchange="hitung(this)" class="form-control input-sm number"/></td>
                   <td><input type="text" name="jumlah[]" value=<?php echo $barang_beli_detail['jumlah']?> onchange="hitung(this)" size="3"  class="form-control input-sm number"/></td>
@@ -148,18 +137,7 @@
                       <i class="glyphicon glyphicon-minus"></i>
                     </a>
                   </td>
-                  <td>
-                  <?php                  
-                   echo form_dropdown(
-                           'nama_barang_tmp[]',
-                           $nama_barangs,  
-                           set_value('nama_barang',''),
-                           'class="form-control input-sm "  onchange="pilih_barang(this)"'
-                           );             
-                  ?>
-                 <?php echo form_error('status');?>
-                 <input type="hidden"  name="nama_barang[]" class="form-control input-sm"/>
-                </td>
+                  <td><input type="text"   name="nama_barang[]"  onfocus="active_barang(this)" class="nama_barang form-control input-sm"/> </td>
                   <td><input type="text" readonly name="kode_barang[]" class="form-control input-sm"/></td>
                   <td><input type="text" name="harga[]"  onchange="hitung(this)" class="form-control input-sm number"/></td>
                   <td><input type="text" name="jumlah[]" onchange="hitung(this)" size="3"  class="form-control input-sm number"/></td>
@@ -167,6 +145,7 @@
                   <td><input type="text" readonly name="total_harga[]" class="form-control input-sm number"/></td>
                 </tr>
                 <?php endif?>
+                <input type="hidden" class="parent_id" value="">
               </tbody>
             </table>
             <a href="javascript:;" onclick="tambah_barang()" class="btn btn-success btn-sm" data-tooltip="tooltip" data-placement="top" title="" data-original-title="Tambah Barang">
@@ -309,63 +288,95 @@
 <?php echo form_close(); ?>  
 
 <script>
-  function hitung(elm){
-    parent = $(elm).parent().parent().attr('id');
-    harga = $('#'+parent+' input[name="harga[]"]').val();
-    jumlah = $('#'+parent+' input[name="jumlah[]"]').val();
+      function hitung(elm){
+        parent = $(elm).parent().parent().attr('id');
+        harga = $('#'+parent+' input[name="harga[]"]').val();
+        jumlah = $('#'+parent+' input[name="jumlah[]"]').val();
 
-    // total setiap items
-    total_val = parseFloat(harga)*parseFloat(jumlah);
-    total = $('#'+parent+' input[name="total_harga[]"]').val(total_val);
+        // total setiap items
+        total_val = parseFloat(harga)*parseFloat(jumlah);
+        total = $('#'+parent+' input[name="total_harga[]"]').val(total_val);
 
-    
+        
 
-    hitung_total();
-  }
+        hitung_total();
+      }
 
-  function hitung_total(){
+      function hitung_total(){
 
-    // sub total
-    sub_total_val = parseFloat(0);
-    $( "tr.barang_items" ).each(function( index ) {
-      console.log(this);
-      barang_items_id = $( this ).attr('id');
-      val_tmp = $('#'+barang_items_id+' input[name="total_harga[]"]').val();
-      sub_total_val += parseFloat(val_tmp);
+        // sub total
+        sub_total_val = parseFloat(0);
+        $( "tr.barang_items" ).each(function( index ) {
+          console.log(this);
+          barang_items_id = $( this ).attr('id');
+          val_tmp = $('#'+barang_items_id+' input[name="total_harga[]"]').val();
+          sub_total_val += parseFloat(val_tmp);
+        });
+        $('#sub_total').val(sub_total_val); 
+
+        // grand total
+        total_diskon =  $('#total_diskon').val();
+        total_ongkoskirim = $('#total_ongkoskirim').val();
+        total_upah = $('#total_upah').val();
+        total_diskon = total_diskon==''?0:parseFloat(total_diskon);
+        total_ongkoskirim = total_ongkoskirim==''?0:parseFloat(total_ongkoskirim);
+        total_upah = total_upah==''?0:parseFloat(total_upah);
+
+        grand_total = (sub_total_val-total_diskon)+total_ongkoskirim+total_upah;
+        $('#total').val(grand_total);
+      }
+
+
+      function active_barang(elm){
+        parent_id = $(elm).parent().parent().attr('id');
+        $('.parent_id').val(parent_id);
+        //alert(parent_id);
+      }
+
+     function pilih_barang(elm){
+      data = elm.item.value;
+      parent_id = $('.parent_id').val()
+      arr = data.split('|');
+      //$('#'+parent_id+' input[name="harga[]"]').val(arr[3]);
+      $('#'+parent_id+' input[name="id_satuan[]"]').val(arr[2]);
+      $('#'+parent_id+' input[name="kode_barang[]"]').val(arr[1]);
+      $('#'+parent_id+' input[name="nama_barang[]"]').val(arr[0]);
+
+     }
+     var availableTags = [
+
+          <?php foreach($nama_barangs as $label=>$val):?>
+          {
+            label : "<?php echo $label?>",
+            value : "<?php echo $val?>"
+          },
+          <?php endforeach?>
+        ];
+
+     function tambah_barang(){
+      elem = $('.data-detail tr').first().html();
+      $('.data-detail').append('<tr class="barang_items" id="data_'+$('.data-detail tr').length+'">'+elem+'</tr>');
+      
+      $( ".nama_barang" ).autocomplete({
+        source: availableTags,
+        select: function( event, ui ) {
+          pilih_barang(ui);
+          return false;
+        }
+      });
+     }
+
+     function hapus_barang(elm){
+      $(elm).parent().parent().remove();
+     }
+      
+    $( ".nama_barang" ).autocomplete({
+      source: availableTags,
+      select: function( event, ui ) {
+        pilih_barang(ui);
+        return false;
+      }
     });
-    $('#sub_total').val(sub_total_val); 
-
-    // grand total
-    total_diskon =  $('#total_diskon').val();
-    total_ongkoskirim = $('#total_ongkoskirim').val();
-    total_upah = $('#total_upah').val();
-    total_diskon = total_diskon==''?0:parseFloat(total_diskon);
-    total_ongkoskirim = total_ongkoskirim==''?0:parseFloat(total_ongkoskirim);
-    total_upah = total_upah==''?0:parseFloat(total_upah);
-
-    grand_total = (sub_total_val-total_diskon)+total_ongkoskirim+total_upah;
-    $('#total').val(grand_total);
-  }
 
 
-
- function pilih_barang(elm){
-  parent = $(elm).parent().parent().attr('id');
-
-  data = $(elm).val();
-  arr = data.split('|');
-  $('#'+parent+' input[name="id_satuan[]"]').val(arr[2]);
-  $('#'+parent+' input[name="kode_barang[]"]').val(arr[1]);
-  $('#'+parent+' input[name="nama_barang[]"]').val(arr[0]);
-
- }
-
- function tambah_barang(){
-  elem = $('.data-detail tr').first().html();
-  $('.data-detail').append('<tr class="barang_items" id="data_'+$('.data-detail tr').length+'">'+elem+'</tr>');
- }
-
- function hapus_barang(elm){
-  $(elm).parent().parent().remove();
- }
 </script>

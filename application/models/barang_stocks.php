@@ -159,6 +159,8 @@ class barang_stocks extends CI_Model
                 'jumlah_stocks' => '',
             
                 'id_satuan' => '',
+                'harga_beli' => '',
+                'harga_jual'    => '',
             
         );
 
@@ -188,6 +190,8 @@ class barang_stocks extends CI_Model
             'jumlah_stocks' => strip_tags($this->input->post('jumlah_stocks', TRUE)),
         
             'id_satuan' => strip_tags($this->input->post('id_satuan', TRUE)),
+            'harga_beli' => strip_tags($this->input->post('harga_beli', TRUE)),
+            'harga_jual' => strip_tags($this->input->post('harga_jual', TRUE)),
         
         );
         
@@ -220,6 +224,8 @@ class barang_stocks extends CI_Model
                 'jumlah_stocks' => strip_tags($this->input->post('jumlah_stocks', TRUE)),
         
                 'id_satuan' => strip_tags($this->input->post('id_satuan', TRUE)),
+                'harga_beli' => strip_tags($this->input->post('harga_beli', TRUE)),
+                'harga_jual' => strip_tags($this->input->post('harga_jual', TRUE)),
         
         );
         

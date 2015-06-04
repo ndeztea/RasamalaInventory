@@ -102,6 +102,44 @@
                  <?php echo form_error('id_satuan');?>
                 </div>
               </div> <!--/ Id Satuan -->
+
+              <div class="form-group">
+                   <label for="jumlah_stocks" class="col-sm-2 control-label">Harga Beli <span class="required-input">*</span></label>
+                <div class="col-sm-6">                                   
+                  <?php                  
+                   echo form_input(
+                                array(
+                                 'name'         => 'harga_beli',
+                                 'id'           => 'harga_beli',                       
+                                 'class'        => 'form-control input-sm  required',
+                                 'placeholder'  => 'Harga Beli',
+                                 'maxlength'=>'11'
+                                 ),
+                                 set_value('harga_beli',$barang_stock['harga_beli'])
+                           );             
+                  ?>
+                 <?php echo form_error('harga_beli');?>
+                </div>
+              </div> <!--/ harga beli -->
+
+              <div class="form-group">
+                   <label for="jumlah_stocks" class="col-sm-2 control-label">Harga Jual <span class="required-input">*</span></label>
+                <div class="col-sm-6">                                   
+                  <?php                  
+                   echo form_input(
+                                array(
+                                 'name'         => 'harga_jual',
+                                 'id'           => 'harga_jual',                       
+                                 'class'        => 'form-control input-sm  required',
+                                 'placeholder'  => 'Harga Jual',
+                                 'maxlength'=>'11'
+                                 ),
+                                 set_value('harga_jual',$barang_stock['harga_jual'])
+                           );             
+                  ?>
+                 <?php echo form_error('harga_jual');?>
+                </div>
+              </div> <!--/ harga jual -->
                
            
       </div> <!--/ Panel Body -->
