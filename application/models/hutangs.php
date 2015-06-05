@@ -43,6 +43,15 @@ class hutangs extends CI_Model
         }
     }
 
+    public function get_total_hutang($day=7){
+        $sql = " SELECT sum(total) as total FROM hutang WHERE status = 2 ".
+            " AND (DATEDIFF(tanggal_update,now()) <= $day) ";
+
+        $data = $this->db->query($sql)->row_array();
+
+        return $data['total'];
+    }
+
     
 
     /**

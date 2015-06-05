@@ -57,3 +57,36 @@ li.ui-menu-item:hover {
 }
 
 .ui-helper-hidden-accessible{display: none}
+
+.dashboard{margin-top: 40px }
+.dashboard .penjualan{
+  border:1px solid #0f9159;
+  padding:5px;
+  background-color: #28B779;
+  margin-bottom: 10px;
+}
+.dashboard .pembelian{
+  border:1px solid #b22725;
+  padding:5px;
+  background-color: #C9302C;
+  margin-bottom: 10px;
+}
+
+.dashboard .hutang{
+  border:1px solid #2b5aa5;
+  padding:5px;
+  background-color: #3b73d3;
+  margin-bottom: 10px;
+}
+
+.dashboard .piutang{
+  border:1px solid #8866b7;
+  padding:5px;
+  background-color: #a07dce;
+  margin-bottom: 10px;
+}
+
+.dashboard small{color:#FFF; opacity: 0.8}
+.dashboard h2{text-align: right;color:#FFF;font-size: 24px}
+
+

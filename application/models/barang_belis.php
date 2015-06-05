@@ -41,6 +41,15 @@ class barang_belis extends CI_Model
         }
     }
 
+    public function get_total_beli($day=7){
+        $sql = " SELECT sum(total) as total FROM barang_beli WHERE status = 1 ".
+            " AND (DATEDIFF(tanggal_update,now()) <= $day) ";
+
+        $data = $this->db->query($sql)->row_array();
+
+        return $data['total'];
+    }
+
     
 
     /**

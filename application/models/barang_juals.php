@@ -41,8 +41,16 @@ class barang_juals extends CI_Model
         }
     }
 
-    
+    public function get_total_jual($day=7){
+        $sql = " SELECT sum(total) as total FROM barang_jual WHERE status = 1 ".
+            " AND (DATEDIFF(tanggal_update,now()) <= $day) ";
 
+        $data = $this->db->query($sql)->row_array();
+
+        return $data['total'];
+    }
+
+    
     /**
      *  Count All barang_jual
      *    
