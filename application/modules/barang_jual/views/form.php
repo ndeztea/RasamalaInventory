@@ -289,7 +289,12 @@
 
 <script>
       function hitung(elm){
-        parent = $(elm).parent().parent().attr('id');
+        if(typeof elm === 'object'){
+          parent = $(elm).parent().parent().attr('id');
+        }else{
+          parent = elm;
+        }
+        
         harga = $('#'+parent+' input[name="harga[]"]').val();
         jumlah = $('#'+parent+' input[name="jumlah[]"]').val();
 
@@ -342,7 +347,9 @@
       $('#'+parent_id+' input[name="kode_barang[]"]').val(arr[1]);
       $('#'+parent_id+' input[name="nama_barang[]"]').val(arr[0]);
 
+      hitung(parent_id);
      }
+
      var availableTags = [
 
           <?php foreach($nama_barangs as $label=>$val):?>

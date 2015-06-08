@@ -14,8 +14,9 @@ function format_uang($value){
     return 'Rp. '.number_format($value,2,',','.'); 
 }
 
-function format_tanggal($date){
-    return date('d F Y', strtotime($date));
+function format_tanggal($date,$time=false){
+	$formatTime = $time==true?' H:i ':'';
+    return date('d F Y'.$formatTime, strtotime($date));
 }
 
 function check_tempo($date){

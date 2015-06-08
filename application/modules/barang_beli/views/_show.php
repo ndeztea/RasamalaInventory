@@ -96,6 +96,14 @@
                   <td class="number"><strong><?php echo format_uang($barang_beli['total'])?></strong></td>
                 </tr>
                 <tr>
+                  <th>Total Bayar:</th>
+                  <td class="number"><strong><?php echo format_uang($barang_beli['total_bayar'])?></strong></td>
+                </tr>
+                <tr>
+                  <th>Total Sisa:</th>
+                  <td class="number"><strong><?php echo format_uang($barang_beli['total_sisa'])?></strong></td>
+                </tr>
+                <tr>
                   <th>Status:</th>
                   <td><strong><?php echo $this->statuss->get_status_name($barang_beli['status'])?></strong>
                   </td>

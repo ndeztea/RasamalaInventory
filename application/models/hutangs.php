@@ -100,6 +100,21 @@ class hutangs extends CI_Model
         }
     }
 
+    public function get_id_by_id_beli($id_barang_beli){
+
+        $this->db->where('id_barang_beli', $id_barang_beli);  
+        $result = $this->db->get('hutang');
+
+        if ($result->num_rows() > 0) 
+        {
+            $data = $result->row_array();
+            return $data['id'];
+        } 
+        else 
+        {
+            return 0;
+        }
+    }
     
     
     
@@ -190,21 +205,24 @@ class hutangs extends CI_Model
     *  @return void
     *
     */
-    public function save() 
+    public function save($data='') 
     {
-        $data = array(
+        if(empty($data)){
+            $data = array(
         
-            'jenis_hutang' => strip_tags($this->input->post('jenis_hutang', TRUE)),
+                'jenis_hutang' => strip_tags($this->input->post('jenis_hutang', TRUE)),
+            
+                'total' => strip_tags($this->input->post('total', TRUE)),
+            
+                'status' => strip_tags($this->input->post('status', TRUE)),
+            
+                'keterangan' => strip_tags($this->input->post('keterangan', TRUE)),
+            
+                'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
+            
+            );
+        }
         
-            'total' => strip_tags($this->input->post('total', TRUE)),
-        
-            'status' => strip_tags($this->input->post('status', TRUE)),
-        
-            'keterangan' => strip_tags($this->input->post('keterangan', TRUE)),
-        
-            'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
-        
-        );
         
         
         $this->db->insert('hutang', $data);
@@ -222,9 +240,10 @@ class hutangs extends CI_Model
     *  @return void
     *
     */
-    public function update($id)
+    public function update($id,$data='')
     {
-        $data = array(
+        if(empty($data)){
+            $data = array(
         
                 'jenis_hutang' => strip_tags($this->input->post('jenis_hutang', TRUE)),
         
@@ -236,15 +255,14 @@ class hutangs extends CI_Model
         
                 'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
         
-        );
+            );
+        }
+        
         
         
         $this->db->where('id', $id);
         $this->db->update('hutang', $data);
     }
-
-
-    
     
     
     /**
@@ -261,14 +279,6 @@ class hutangs extends CI_Model
         $this->db->delete('hutang');
         
     }
-
-
-
-
-
-
-
-    
     
     // get barang_beli
     public function get_barang_beli() 

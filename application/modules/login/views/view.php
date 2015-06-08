@@ -1,5 +1,5 @@
 <div class="container login-box">
-	<h1>CV. RASAMALA</h1>
+	<h1>PT. RCP</h1>
 	<center>
 	<table class="text-center">
 		<?php echo form_open(site_url('login/')); ?>

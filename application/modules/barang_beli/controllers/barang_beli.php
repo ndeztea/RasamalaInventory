@@ -28,6 +28,7 @@ class barang_beli extends MY_Controller
        //     echo $this->session->flashdata('notif');
         $this->load->model('barang_stocks');
         $this->load->model('satuans');
+        $this->load->model('hutangs');
 
     }
     
@@ -248,7 +249,21 @@ class barang_beli extends MY_Controller
                             $this->barang_stocks->update_stocks($kode_barang[$a],$stock_updated);
                           }
                           
-                          
+                          // update hutang
+                          $total_sisa = $this->input->post('total_sisa');
+                          $status = $this->input->post('status');
+                          $kode_beli = $this->input->post('kode_beli');
+                          if($status==2){
+                              $dataHutang = array(
+                                    'jenis_hutang' => 'Hutang barang masuk '.$kode_beli,
+                                    'total'        => $total_sisa,
+                                    'status'        => $status,
+                                    'keterangan'    => 'Hutang yang belum di bayar untuk barang masuk dengan kode '.$kode_beli,
+                                    'jatuh_tempo'   => date('Y-m-d', strtotime("+30 days")),
+
+                                );
+                              $this->hutangs->save($dataHutang);
+                            }
 
                           $this->session->set_flashdata('notif', notify('Data berhasil di simpan','success'));
                           redirect('barang_beli');
@@ -293,6 +308,27 @@ class barang_beli extends MY_Controller
                             
                             );
                             $this->barang_beli_details->save($data_barang_detail);
+                          }
+                          
+
+                        // update hutang
+                          $total_sisa = $this->input->post('total_sisa');
+                          $status = $this->input->post('status');
+                          $kode_beli = $this->input->post('kode_beli');
+                          $id_hutang = $this->hutangs->get_id_by_id_beli($id);
+                          if($status==2){
+                            $dataHutang = array(
+                                'jenis_hutang' => 'Hutang barang masuk '.$kode_beli,
+                                'total'        => $total_sisa,
+                                'status'        => $status,
+                                'keterangan'    => 'Hutang yang belum di bayar untuk barang masuk dengan kode '.$kode_beli,
+                                'jatuh_tempo'   => date('Y-m-d', strtotime("+30 days")),
+
+                            );
+
+                            $this->hutangs->update($id_hutang,$dataHutang);
+                          }else{
+                            $this->hutangs->destroy($id_hutang);
                           }
                           
 

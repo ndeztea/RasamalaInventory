@@ -8,3 +8,10 @@ ALTER TABLE `barang_beli` ADD `id_user` INT NOT NULL ;
 
 
 ALTER TABLE `barang_stock` ADD `harga_beli` FLOAT NOT NULL AFTER `id_satuan`, ADD `harga_jual` FLOAT NOT NULL AFTER `harga_beli`;
+
+ALTER TABLE `barang_jual` ADD `total_bayar` FLOAT NOT NULL AFTER `total`, ADD `total_sisa` FLOAT NOT NULL AFTER `total_bayar`
+ALTER TABLE `barang_beli` ADD `total_bayar` FLOAT NOT NULL AFTER `total`, ADD `total_sisa` FLOAT NOT NULL AFTER `total_bayar`
+
+ALTER TABLE `hutang` ADD `id_barang_beli` INT NULL DEFAULT NULL AFTER `id`;
+
+ALTER TABLE `piutang` ADD `id_barang_jual` INT NULL DEFAULT NULL AFTER `id`;

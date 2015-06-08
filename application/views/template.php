@@ -56,14 +56,14 @@
             <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-shopping-cart"></i> Penjualan <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="<?php echo site_url('barang_jual')?>">Delivery Order</a></li>
+                <li><a href="<?php echo site_url('barang_jual')?>">Barang Keluar</a></li>
                 <li><a href="<?php echo site_url('piutang')?>">Piutang</a></li>
               </ul>
             </li>
             <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-cart-arrow-down"></i> Pembelian <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="<?php echo site_url('barang_beli')?>">Purchase Order</a></li>
+                <li><a href="<?php echo site_url('barang_beli')?>">Barang Masuk</a></li>
                 <li><a href="<?php echo site_url('hutang')?>">Hutang</a></li>
               </ul>
             </li>

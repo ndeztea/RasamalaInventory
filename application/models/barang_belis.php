@@ -26,7 +26,7 @@ class barang_belis extends CI_Model
      *  @return array
      *
      */
-    public function get_all($limit, $offset) 
+    public function get_all($limit=25, $offset=0) 
     {
         $this->db->order_by('id','desc');
         $result = $this->db->get('barang_beli', $limit, $offset);
@@ -39,6 +39,14 @@ class barang_belis extends CI_Model
         {
             return array();
         }
+    }
+
+    public function set_kode_beli(){
+        $data = $this->get_all(1,0);
+        $last_id = empty($data)?0:$data[0]['id'];
+
+        return $last_id+1;
+
     }
 
     public function get_total_beli($day=7){
@@ -167,7 +175,7 @@ class barang_belis extends CI_Model
     {
         $data = array(
             
-                'kode_beli' => '',
+                'kode_beli' => 'BM-'.$this->set_kode_beli(),
             
                 'nama' => '',
             
@@ -182,6 +190,8 @@ class barang_belis extends CI_Model
                 'total_upah' => '',
             
                 'total' => '',
+                'total_bayar' => '',
+                'total_sisa' => '',
             
                 'status' => '',
             
@@ -219,6 +229,8 @@ class barang_belis extends CI_Model
             'total_upah' => strip_tags($this->input->post('total_upah', TRUE)),
         
             'total' => strip_tags($this->input->post('total', TRUE)),
+            'total_bayar' => strip_tags($this->input->post('total_bayar', TRUE)),
+            'total_sisa' => strip_tags($this->input->post('total_sisa', TRUE)),
             'id_user'=>$this->session->userdata('id'),
         
             'status' => strip_tags($this->input->post('status', TRUE)),
@@ -262,6 +274,9 @@ class barang_belis extends CI_Model
                 'total_upah' => strip_tags($this->input->post('total_upah', TRUE)),
         
                 'total' => strip_tags($this->input->post('total', TRUE)),
+                'total_bayar' => strip_tags($this->input->post('total_bayar', TRUE)),
+                'total_sisa' => strip_tags($this->input->post('total_sisa', TRUE)),
+                'id_user'=>$this->session->userdata('id'),
         
                 'status' => strip_tags($this->input->post('status', TRUE)),
         
@@ -271,10 +286,6 @@ class barang_belis extends CI_Model
         $this->db->where('id', $id);
         $this->db->update('barang_beli', $data);
     }
-
-
-    
-    
     
     /**
     *  Delete data by id
@@ -290,14 +301,6 @@ class barang_belis extends CI_Model
         $this->db->delete('barang_beli');
         
     }
-
-
-
-
-
-
-
-    
     
     // get barang_beli
     public function get_barang_beli() 
