@@ -98,9 +98,21 @@ class piutangs extends CI_Model
         }
     }
 
-    
-    
-    
+    public function get_id_by_id_jual($id_barang_jual){
+
+        $this->db->where('id_barang_jual', $id_barang_jual);  
+        $result = $this->db->get('piutang');
+
+        if ($result->num_rows() > 0) 
+        {
+            $data = $result->row_array();
+            return $data['id'];
+        } 
+        else 
+        {
+            return 0;
+        }
+    }
     
     
     /**
@@ -188,21 +200,23 @@ class piutangs extends CI_Model
     *  @return void
     *
     */
-    public function save() 
+    public function save($data='') 
     {
-        $data = array(
+        if(empty($data)){
+            $data = array(
         
-            'jenis_piutang' => strip_tags($this->input->post('jenis_piutang', TRUE)),
+                'jenis_piutang' => strip_tags($this->input->post('jenis_piutang', TRUE)),
         
-            'total' => strip_tags($this->input->post('total', TRUE)),
+                'total' => strip_tags($this->input->post('total', TRUE)),
         
-            'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
+                'jatuh_tempo' => strip_tags($this->input->post('jatuh_tempo', TRUE)),
         
-            'keterangan' => strip_tags($this->input->post('keterangan', TRUE)),
+                'keterangan' => strip_tags($this->input->post('keterangan', TRUE)),
         
-            'status' => strip_tags($this->input->post('status', TRUE)),
+                'status' => strip_tags($this->input->post('status', TRUE)),
         
-        );
+            );
+        }
         
         
         $this->db->insert('piutang', $data);
@@ -220,9 +234,10 @@ class piutangs extends CI_Model
     *  @return void
     *
     */
-    public function update($id)
+    public function update($id,$data='')
     {
-        $data = array(
+        if(empty($data)){
+            $data = array(
         
                 'jenis_piutang' => strip_tags($this->input->post('jenis_piutang', TRUE)),
         
@@ -234,8 +249,8 @@ class piutangs extends CI_Model
         
                 'status' => strip_tags($this->input->post('status', TRUE)),
         
-        );
-        
+            );
+        }
         
         $this->db->where('id', $id);
         $this->db->update('piutang', $data);

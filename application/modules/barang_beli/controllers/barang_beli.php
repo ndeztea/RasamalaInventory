@@ -326,7 +326,8 @@ class barang_beli extends MY_Controller
 
                             );
 
-                            $this->hutangs->update($id_hutang,$dataHutang);
+                            $this->hutangs->destroy($id_hutang);
+                            $this->hutangs->save($dataHutang);
                           }else{
                             $this->hutangs->destroy($id_hutang);
                           }

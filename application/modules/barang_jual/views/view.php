@@ -51,7 +51,7 @@
                 
                     <th>Nama</th>   
                 
-                    <th>Alamat</th>   
+                    <!--th>Alamat</th>   
                 
                     <th>Hp</th>   
                 
@@ -62,6 +62,8 @@
                     <th>Total Upah</th-->   
                 
                     <th>Total</th>   
+                    <th>Total Bayar</th> 
+                    <th>Total Sisa</th>
                 
                     <th>Status</th>   
                 
@@ -89,7 +91,7 @@
                
                <td><?php echo $barang_jual['nama']; ?></td>
                
-               <td><?php echo $barang_jual['alamat']; ?></td>
+               <!--td><?php echo $barang_jual['alamat']; ?></td>
                
                <td><?php echo $barang_jual['hp']; ?></td>
                
@@ -100,6 +102,8 @@
                <td><?php echo format_uang($barang_jual['total_upah']); ?></td-->
                
                <td><?php echo format_uang($barang_jual['total']); ?></td>
+               <td><?php echo format_uang($barang_jual['total_bayar']); ?></td>
+               <td><?php echo format_uang($barang_jual['total_sisa']); ?></td>
                
                <td><?php echo $this->statuss->get_status_name($barang_jual['status']); ?></td>
                

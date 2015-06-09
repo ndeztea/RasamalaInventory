@@ -41,6 +41,14 @@ class barang_juals extends CI_Model
         }
     }
 
+    public function set_kode_jual(){
+        $data = $this->get_all(1,0);
+        $last_id = empty($data)?0:$data[0]['id'];
+
+        return $last_id+1;
+
+    }
+
     public function get_total_jual($day=7){
         $sql = " SELECT sum(total) as total FROM barang_jual WHERE status = 1 ".
             " AND (DATEDIFF(tanggal_update,now()) <= $day) ";
@@ -166,7 +174,7 @@ class barang_juals extends CI_Model
     {
         $data = array(
             
-                'kode_jual' => '',
+                'kode_jual' => 'BM-'.$this->set_kode_jual(),
             
                 'nama' => '',
             
@@ -218,6 +226,8 @@ class barang_juals extends CI_Model
             'total_upah' => strip_tags($this->input->post('total_upah', TRUE)),
         
             'total' => strip_tags($this->input->post('total', TRUE)),
+            'total_sisa' => strip_tags($this->input->post('total_sisa', TRUE)),
+            'total_bayar' => strip_tags($this->input->post('total_bayar', TRUE)),
             'id_user'=>$this->session->userdata('id'),
         
             'status' => strip_tags($this->input->post('status', TRUE)),
@@ -259,6 +269,8 @@ class barang_juals extends CI_Model
                 'total_ongkoskirim' => strip_tags($this->input->post('total_ongkoskirim', TRUE)),
         
                 'total_upah' => strip_tags($this->input->post('total_upah', TRUE)),
+                'total_sisa' => strip_tags($this->input->post('total_sisa', TRUE)),
+                'total_bayar' => strip_tags($this->input->post('total_bayar', TRUE)),
         
                 'total' => strip_tags($this->input->post('total', TRUE)),
         

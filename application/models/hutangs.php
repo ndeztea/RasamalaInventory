@@ -116,10 +116,6 @@ class hutangs extends CI_Model
         }
     }
     
-    
-    
-    
-    
     /**
     * Search All hutang
     * @param keyword : mixed

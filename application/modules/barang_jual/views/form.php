@@ -85,7 +85,8 @@
                                  'id'           => 'kode_jual',                       
                                  'class'        => 'form-control input-sm  required',
                                  'placeholder'  => 'Kode Jual',
-                                 'maxlength'=>'11'
+                                 'maxlength'=>'11',
+                                 'readonly' =>  'readonly'
                                  ),
                                  set_value('kode_jual',$barang_jual['kode_jual'])
                            );             
@@ -123,8 +124,8 @@
                   </td>
                   <td><input type="text"  name="nama_barang[]"  onfocus="active_barang(this)" value="<?php echo $barang_jual_detail['nama_barang']?>" class="nama_barang form-control input-sm"/></td>
                   <td><input type="text" readonly name="kode_barang[]" value=<?php echo $barang_jual_detail['kode_barang']?> class="form-control input-sm"/></td>
-                  <td><input type="text" name="harga[]" value=<?php echo $barang_jual_detail['harga']?> onchange="hitung(this)" class="form-control input-sm number"/></td>
-                  <td><input type="text" name="jumlah[]" value=<?php echo $barang_jual_detail['jumlah']?> onchange="hitung(this)" size="3"  class="form-control input-sm number"/></td>
+                  <td><input type="text" name="harga[]" value=<?php echo $barang_jual_detail['harga']?> oninput="hitung(this)" class="form-control input-sm number"/></td>
+                  <td><input type="text" name="jumlah[]" value=<?php echo $barang_jual_detail['jumlah']?> oninput="hitung(this)" size="3"  class="form-control input-sm number"/></td>
                   <td><input type="text" readonly name="id_satuan[]" value=<?php echo $barang_jual_detail['id_satuan']?> size="3" class="form-control input-sm"/></td>
                   <td><input type="text" readonly name="total_harga[]" value=<?php echo $barang_jual_detail['total_harga']?> class="form-control input-sm number"/></td>
                   <?php $a++;$sub_total += $barang_jual_detail['total_harga']?>
@@ -139,8 +140,8 @@
                   </td>
                   <td><input type="text"   name="nama_barang[]"  onfocus="active_barang(this)" class="nama_barang form-control input-sm"/> </td>
                   <td><input type="text" readonly name="kode_barang[]" class="form-control input-sm"/></td>
-                  <td><input type="text" name="harga[]"  onchange="hitung(this)" class="form-control input-sm number"/></td>
-                  <td><input type="text" name="jumlah[]" onchange="hitung(this)" size="3"  class="form-control input-sm number"/></td>
+                  <td><input type="text" name="harga[]"  oninput="hitung(this)" class="form-control input-sm number"/></td>
+                  <td><input type="text" name="jumlah[]" oninput="hitung(this)" size="3"  class="form-control input-sm number"/></td>
                   <td><input type="text" readonly name="id_satuan[]" size="3" class="form-control input-sm"/></td>
                   <td><input type="text" readonly name="total_harga[]" class="form-control input-sm number"/></td>
                 </tr>
@@ -190,7 +191,7 @@
                                  'id'           => 'total_diskon',                       
                                  'class'        => 'form-control input-sm number ',
                                  'placeholder'  => 'Total Diskon',
-                                 'onchange'     => 'hitung_total(this)'
+                                 'oninput'     => 'hitung_total(this)'
                                  
                                  ),
                                  set_value('total_diskon',$barang_jual['total_diskon'])
@@ -208,7 +209,7 @@
                                  'id'           => 'total_ongkoskirim',                       
                                  'class'        => 'form-control input-sm number',
                                  'placeholder'  => 'Total Ongkoskirim',
-                                 'onchange'     => 'hitung_total()'
+                                 'oninput'     => 'hitung_total()'
                                  
                                  ),
                                  set_value('total_ongkoskirim',$barang_jual['total_ongkoskirim'])
@@ -226,7 +227,7 @@
                                  'id'           => 'total_upah',                       
                                  'class'        => 'form-control input-sm number',
                                  'placeholder'  => 'Total Upah',
-                                 'onchange'     => 'hitung_total()'
+                                 'oninput'     => 'hitung_total()'
                                  
                                  ),
                                  set_value('total_upah',$barang_jual['total_upah'])
@@ -251,6 +252,39 @@
                            );             
                   ?>
                  <?php echo form_error('total');?></td>
+                </tr>
+                <tr>
+                  <th>Total Bayar:</th>
+                  <td><?php                  
+                   echo form_input(
+                                array(
+                                 'name'         => 'total_bayar',
+                                 'id'           => 'total_bayar',                       
+                                 'class'        => 'form-control input-sm  required number',
+                                 'placeholder'  => 'Total Bayar',
+                                 'oninput'     => 'hitung_total_sisa()'
+                                 ),
+                                 set_value('total_bayar',$barang_jual['total_bayar'])
+                           );             
+                  ?>
+                 <?php echo form_error('total_bayar');?></td>
+                </tr>
+                <tr>
+                  <th>Total Sisa:</th>
+                  <td><?php                  
+                   echo form_input(
+                                array(
+                                 'name'         => 'total_sisa',
+                                 'id'           => 'total_sisa',                       
+                                 'class'        => 'form-control input-sm  required number',
+                                 'placeholder'  => 'Total Sisa',
+                                 'readonly'     => 'readonly'
+                                 
+                                 ),
+                                 set_value('total_sisa',$barang_jual['total_sisa'])
+                           );             
+                  ?>
+                 <?php echo form_error('total_sisa');?></td>
                 </tr>
                 <tr>
                   <th>Status:</th>
@@ -294,7 +328,7 @@
         }else{
           parent = elm;
         }
-        
+
         harga = $('#'+parent+' input[name="harga[]"]').val();
         jumlah = $('#'+parent+' input[name="jumlah[]"]').val();
 
@@ -348,14 +382,14 @@
       $('#'+parent_id+' input[name="nama_barang[]"]').val(arr[0]);
 
       hitung(parent_id);
-     }
 
+     }
      var availableTags = [
 
           <?php foreach($nama_barangs as $label=>$val):?>
           {
-            label : "<?php echo $label?>",
-            value : "<?php echo $val?>"
+            label : "<?php echo str_replace('"','\"',$label)?>",
+            value : "<?php echo str_replace('"','\"',$val)?>"
           },
           <?php endforeach?>
         ];
@@ -376,6 +410,14 @@
      function hapus_barang(elm){
       $(elm).parent().parent().remove();
      }
+
+    function hitung_total_sisa(){
+      total = parseFloat($('#total').val());
+      total_bayar = parseFloat($('#total_bayar').val());
+
+      total_sisa = total-total_bayar;
+      $('#total_sisa').val(total_sisa);
+    }
       
     $( ".nama_barang" ).autocomplete({
       source: availableTags,

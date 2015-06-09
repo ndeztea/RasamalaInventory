@@ -80,8 +80,6 @@
                
                <td><?php echo format_uang($piutang['total']); ?></td>
                
-               <td><?php echo $piutang['jatuh_tempo']; ?></td>
-               
                <td><?php echo $piutang['keterangan']; ?></td>
 
                <td><?php echo format_tanggal($piutang['jatuh_tempo']);?> </td>

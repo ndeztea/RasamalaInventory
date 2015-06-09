@@ -329,7 +329,6 @@
           parent = elm;
         }
 
-        parent = $(elm).parent().parent().attr('id');
         harga = $('#'+parent+' input[name="harga[]"]').val();
         jumlah = $('#'+parent+' input[name="jumlah[]"]').val();
 
@@ -382,7 +381,7 @@
       $('#'+parent_id+' input[name="kode_barang[]"]').val(arr[1]);
       $('#'+parent_id+' input[name="nama_barang[]"]').val(arr[0]);
 
-      hitung(elm);
+      hitung(parent_id);
 
      }
      var availableTags = [

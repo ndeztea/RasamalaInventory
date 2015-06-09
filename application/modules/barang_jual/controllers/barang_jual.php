@@ -28,7 +28,7 @@ class barang_jual extends MY_Controller
        //     echo $this->session->flashdata('notif');
         $this->load->model('barang_stocks');
         $this->load->model('satuans');
-
+        $this->load->model('piutangs');
     }
     
 
@@ -246,7 +246,21 @@ class barang_jual extends MY_Controller
                             $this->barang_stocks->update_stocks($kode_barang[$a],$stock_updated);
                           }
                           
-                          
+                          // update piutang
+                          $total_sisa = $this->input->post('total_sisa');
+                          $status = $this->input->post('status');
+                          $kode_jual = $this->input->post('kode_jual');
+                          if($status==2){
+                              $dataPiutang = array(
+                                    'jenis_hutang' => 'Piutang barang keluar '.$kode_jual,
+                                    'total'        => $total_sisa,
+                                    'status'        => $status,
+                                    'keterangan'    => 'Hutang yang belum di bayar untuk barang keluar dengan kode '.$kode_jual,
+                                    'jatuh_tempo'   => date('Y-m-d', strtotime("+30 days")),
+
+                                );
+                              $this->piutangs->save($dataPiutang);
+                            }
 
                           $this->session->set_flashdata('notif', notify('Data berhasil di simpan','success'));
                           redirect('barang_jual');
@@ -293,6 +307,25 @@ class barang_jual extends MY_Controller
                             $this->barang_jual_details->save($data_barang_detail);
                           }
                           
+                          // update piutang
+                          $total_sisa = $this->input->post('total_sisa');
+                          $status = $this->input->post('status');
+                          $kode_jual = $this->input->post('kode_jual');
+                          $id_piutang = $this->piutangs->get_id_by_id_jual($id);
+                          if($status==2){
+                              $dataPiutang = array(
+                                    'jenis_piutang' => 'Piutang barang keluar '.$kode_jual,
+                                    'total'        => $total_sisa,
+                                    'status'        => $status,
+                                    'keterangan'    => 'Hutang yang belum di bayar untuk barang keluar dengan kode '.$kode_jual,
+                                    'jatuh_tempo'   => date('Y-m-d', strtotime("+30 days")),
+
+                                );
+                              $this->piutangs->destroy($id_piutang);
+                              $this->piutangs->save($dataPiutang);
+                            }else{
+                                $this->piutangs->destroy($id_piutang);
+                            }
 
                         $this->session->set_flashdata('notif', notify('Data berhasil di update','success'));
                         redirect('barang_jual');
