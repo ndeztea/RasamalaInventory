@@ -252,7 +252,7 @@ class barang_jual extends MY_Controller
                           $kode_jual = $this->input->post('kode_jual');
                           if($status==2){
                               $dataPiutang = array(
-                                    'jenis_hutang' => 'Piutang barang keluar '.$kode_jual,
+                                    'jenis_piutang' => 'Piutang barang keluar '.$kode_jual,
                                     'total'        => $total_sisa,
                                     'status'        => $status,
                                     'keterangan'    => 'Hutang yang belum di bayar untuk barang keluar dengan kode '.$kode_jual,

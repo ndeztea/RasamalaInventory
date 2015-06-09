@@ -187,6 +187,8 @@ class barang_juals extends CI_Model
                 'total_ongkoskirim' => '',
             
                 'total_upah' => '',
+                'total_sisa' => '',
+                'total_bayar' => '',
             
                 'total' => '',
             

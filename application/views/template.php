@@ -15,7 +15,7 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
    
-    <title><?php echo set_label($this->uri->segment(1))?> - CV. RASAMALA</title>
+    <title><?php echo set_label($this->uri->segment(1))?> - PT. RCP</title>
     <link href="<?php echo base_url(); ?>assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="<?php echo base_url(); ?>assets/css/main.css" rel="stylesheet" type="text/css">
@@ -67,6 +67,7 @@
                 <li><a href="<?php echo site_url('hutang')?>">Hutang</a></li>
               </ul>
             </li>
+            <li><a href="<?php echo site_url('penggajian'); ?>"><i class="fa fa-money"></i> Data Gaji</a></li>
             <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-bar-chart"></i> Laporan <b class="caret"></b></a>
               <ul class="dropdown-menu">
