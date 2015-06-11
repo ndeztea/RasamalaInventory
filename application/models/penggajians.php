@@ -28,7 +28,7 @@ class penggajians extends CI_Model
      */
     public function get_all($limit, $offset) 
     {
-
+        $this->db->order_by('id','desc');
         $result = $this->db->get('penggajian', $limit, $offset);
 
         if ($result->num_rows() > 0) 

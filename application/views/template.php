@@ -68,6 +68,7 @@
               </ul>
             </li>
             <li><a href="<?php echo site_url('penggajian'); ?>"><i class="fa fa-money"></i> Data Gaji</a></li>
+            <li><a href="<?php echo site_url('pajak'); ?>"><i class="fa  fa-file-powerpoint-o"></i> Faktur Pajak</a></li>
             <li>
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-bar-chart"></i> Laporan <b class="caret"></b></a>
               <ul class="dropdown-menu">

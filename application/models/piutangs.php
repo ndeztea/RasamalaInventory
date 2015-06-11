@@ -28,7 +28,7 @@ class piutangs extends CI_Model
      */
     public function get_all($limit, $offset) 
     {
-
+        $this->db->order_by('id','desc');
         $result = $this->db->get('piutang', $limit, $offset);
 
         if ($result->num_rows() > 0) 

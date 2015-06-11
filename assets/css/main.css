@@ -97,3 +97,9 @@ li.ui-menu-item:hover {
   border-radius: 4px;
   color: #FFF;
 }
+
+.pajak table tr td{border:1px solid #999;padding:5px;}
+
+table.data_barang_pajak tr th{border:1px solid #999 !important;padding:3px;text-align: center}
+table.pajak_mewah tr th{border:1px solid #999  !important;padding:3px;text-align: center}
+.no-border{border: 0px !important}
