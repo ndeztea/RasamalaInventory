@@ -170,9 +170,58 @@ class pajaks extends CI_Model
     *  @return array
     *
     */
-    public function add()
+    public function add($id_barang_jual='')
     {
-        $data = array(
+        if($id_barang_jual){
+            $data_barang_jual = $this->barang_juals->get_one($id_barang_jual);
+            $detail_barang = $this->barang_jual_details->get_barang_detail($id_barang_jual);
+
+            $harga = 0;
+            $data_barang = array();
+            $a=0;
+            foreach ($detail_barang as $row) {
+                $data_barang[$a]['nama_barang'] = $row['nama_barang'];
+                $data_barang[$a]['harga'] = $row['harga'] * 1.1;
+                $harga += $data_barang[$a]['harga'];
+
+                $a++;
+            }
+            $data_barang = json_encode($data_barang);
+            $ppn = $harga * 10 / 100;
+
+            $data = array(
+            
+                'id_barang_jual' => $data_barang_jual['id'],
+            
+                'kode' => '',
+            
+                'nama_pembeli_pajak' => $data_barang_jual['nama'],
+            
+                'alamat_pembeli_pajak' => $data_barang_jual['alamat'],
+            
+                'npwp_pembeli_pajak' => '',
+            
+                'nama_penjual_pajak' => 'RCP, PT.',
+            
+                'alamat_penjual_pajak' => 'JL. RAYA PANGALENGAN KM. 24.6 NO.66 KP. BATUREOK CIMAUNG BANDUNG',
+            
+                'npwp_penjual_pajak' => '02.736.480.1-445.000',
+            
+                'data' => $data_barang,
+            
+                'harga_jual' => $harga,
+            
+                'harga_potongan' => '',
+            
+                'uang_muka_diterima' => '',
+            
+                'dasar_pengenaan_pajak' => $harga,
+            
+                'ppn' => $ppn,
+            
+            );
+        }else{
+            $data = array(
             
                 'id_barang_jual' => '',
             
@@ -202,7 +251,9 @@ class pajaks extends CI_Model
             
                 'ppn' => '',
             
-        );
+            );
+        }
+        
 
         return $data;
     }

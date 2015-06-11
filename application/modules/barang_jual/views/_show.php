@@ -127,7 +127,10 @@
                     <a  class="btn btn-success" target="_blank" href="<?php echo site_url('barang_jual/show/'.$barang_jual['id'].'/print/kwitansi')?>">
                         <i class="glyphicon glyphicon-print"></i> Print  Kwitansi
                     </a> 
-                    <?php endif?>                 
+                    <?php endif?> 
+                    <a  class="btn btn-warning"  href="<?php echo site_url('pajak/add/'.$barang_jual['id'])?>">
+                        <i class="fa  fa-file-powerpoint-o"></i> Buat Faktur Pajak
+                    </a>                  
               </div>
           </div>
     </div><!--/ Panel Footer -->  

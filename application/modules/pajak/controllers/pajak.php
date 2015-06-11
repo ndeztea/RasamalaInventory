@@ -55,9 +55,9 @@ class pajak extends MY_Controller
     * Call Form to Add  New pajak
     *
     */
-    public function add() 
+    public function add($id_barang_jual='') 
     {       
-        $data['pajak'] = $this->pajaks->add();
+        $data['pajak'] = $this->pajaks->add($id_barang_jual);
         $data['action']  = 'pajak/save';
      
         $this->template->js_add('
